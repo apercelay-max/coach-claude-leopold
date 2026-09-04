@@ -1,5 +1,5 @@
 /* =========================================================================
-   Coach Claude — données
+   Claude — données
    -------------------------------------------------------------------------
    Tout le contenu (matières + exercices) vit ici, en JS pur (pas de fetch
    JSON) pour que l'appli marche même ouverte directement en double-clic,

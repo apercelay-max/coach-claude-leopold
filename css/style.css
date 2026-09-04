@@ -1,5 +1,5 @@
 /* =========================================================================
-   Coach Claude — Les révisions de Léopold
+   Claude — Les révisions de Léopold
    Feuille de style unique. Variables CSS en tête pour re-thémer facilement.
    ========================================================================= */
 
@@ -422,7 +422,7 @@ img, svg { max-width: 100%; }
 .etoiles { font-size: 0.95rem; letter-spacing: 1px; }
 
 /* =========================================================================
-   Mascotte — Coach Claude, le bonhomme animé
+   Mascotte — Claude, le bonhomme animé
    ========================================================================= */
 
 .mascotte-widget {

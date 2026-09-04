@@ -1,6 +1,6 @@
-# Coach Claude — Les révisions de Léopold
+# Claude — Les révisions de Léopold
 
-Appli web pour accompagner **Léopold (12 ans, 5ème)** dans ses révisions : des exercices par matière, une **Coach Claude** animée qui encourage avec bienveillance (et beaucoup d'humour), et un mode évaluation avec note sur 20.
+Appli web pour accompagner **Léopold (12 ans, 5ème)** dans ses révisions : des exercices par matière, un bonhomme **Claude** animé qui encourage avec bienveillance (et beaucoup d'humour), et un mode évaluation avec note sur 20.
 
 Aucune installation, aucune base de données, aucune clé API : tout est en **HTML/CSS/JS pur**, le contenu est écrit directement dans le code, et la progression est sauvegardée dans le navigateur (`localStorage`). Ça tourne aussi bien en ouvrant simplement `index.html` que sur GitHub Pages.
 
@@ -14,9 +14,9 @@ open index.html
 
 ## Ce qui existe déjà
 
-- **Réviser** : exercices d'une matière (Maths, Français, Histoire-Géo, Sciences, Anglais), correction immédiate, indice à la demande, réactions animées de Coach Claude.
+- **Réviser** : exercices d'une matière (Maths, Français, Histoire-Géo, Sciences, Anglais), correction immédiate, indice à la demande, réactions animées de Claude.
 - **Évaluation** : mêmes matières, mais sans correction immédiate ni indices (comme un vrai contrôle) — récap détaillé et note /20 à la fin.
-- **Coach Claude** : bonhomme animé (SVG + CSS), qui réagit différemment sur une bonne réponse (petit saut, confettis) ou une réponse à revoir (jamais triste, toujours un mot gentil et un peu d'humour). Cliquable à tout moment pour une blague.
+- **Claude** : bonhomme animé (SVG + CSS, couleur et étincelle qui reprennent l'identité visuelle de Claude), qui réagit différemment sur une bonne réponse (petit saut, confettis) ou une réponse à revoir (jamais triste, toujours un mot gentil et un peu d'humour). Cliquable à tout moment pour une blague.
 - **Mes progrès** : XP, niveau, série de jours, étoiles par matière selon la meilleure évaluation.
 
 ## Contenu actuel = démonstration

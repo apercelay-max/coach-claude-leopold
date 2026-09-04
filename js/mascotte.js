@@ -1,5 +1,5 @@
 /* =========================================================================
-   Coach Claude — le bonhomme animé
+   Claude — le bonhomme animé
    -------------------------------------------------------------------------
    Toutes les phrases (encouragements, blagues, accueil, fin de session) et
    les fonctions qui font réagir/parler la mascotte. Pas d'appel réseau :
@@ -9,7 +9,7 @@
 const PHRASES_ACCUEIL = [
   `Salut ${PRENOM} ! Prêt·e à faire chauffer les neurones ? 🧠🔥`,
   "Alors, on attaque quoi aujourd'hui ?",
-  "Je suis Coach Claude, ton assistant de révisions officiel — et ton fan numéro 1, officieusement.",
+  "Je suis Claude, ton assistant de révisions officiel — et ton fan numéro 1, officieusement.",
   "Debout champion ! Les fractions ne vont pas se réviser toutes seules.",
   "Prêt·e à devenir la terreur des évaluations de 5ème ?",
 ];

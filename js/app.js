@@ -1,5 +1,5 @@
 /* =========================================================================
-   Coach Claude — logique de l'application
+   Claude — logique de l'application
    -------------------------------------------------------------------------
    Navigation entre écrans, moteur d'exercices (révision / évaluation),
    correction, progression (XP, niveaux, étoiles, série). Tout en
