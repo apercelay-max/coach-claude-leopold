@@ -480,7 +480,6 @@ img, svg { max-width: 100%; }
 
 .mascotte-tete { fill: var(--orange); }
 .mascotte-ombre { fill: rgba(43, 35, 32, 0.15); }
-.mascotte-etincelle { fill: var(--ambre); }
 .mascotte-jambe { fill: var(--orange); }
 .mascotte-bras-bloc { fill: var(--orange); }
 
