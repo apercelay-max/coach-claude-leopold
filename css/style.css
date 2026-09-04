@@ -481,6 +481,8 @@ img, svg { max-width: 100%; }
 .mascotte-tete { fill: var(--orange); }
 .mascotte-ombre { fill: rgba(43, 35, 32, 0.15); }
 .mascotte-etincelle { fill: var(--ambre); }
+.mascotte-jambe { fill: var(--orange); }
+.mascotte-bras-bloc { fill: var(--orange); }
 
 .mascotte-oeil { fill: var(--encre); animation: clignement 4.8s ease-in-out infinite; transform-origin: center; }
 .mascotte-oeil-d { animation-delay: 0.06s; }
@@ -491,22 +493,17 @@ img, svg { max-width: 100%; }
 }
 
 .mascotte-bouche {
-  fill: none;
-  stroke: var(--encre);
-  stroke-width: 3.2;
-  stroke-linecap: round;
-  transform-origin: 50px 63px;
+  fill: var(--encre);
+  transform-origin: 50px 58.5px;
   transition: transform 0.2s ease;
 }
 
-.mascotte-bras { transform-origin: 50px 55px; }
-.mascotte-bras path { fill: none; stroke: var(--orange); stroke-width: 7; stroke-linecap: round; }
-.mascotte-bras-g { transform-origin: 30px 55px; }
-.mascotte-bras-d { transform-origin: 70px 55px; }
+.mascotte-bras-g { transform-origin: 24px 47.5px; }
+.mascotte-bras-d { transform-origin: 76px 47.5px; }
 
 /* Réaction : bonne réponse — petit saut de joie + grand sourire */
 .mascotte-widget.content .mascotte-corps { animation: saut-de-joie 0.7s ease; }
-.mascotte-widget.content .mascotte-bouche { transform: scaleY(1.5) translateY(2px); }
+.mascotte-widget.content .mascotte-bouche { transform: scaleY(1.6) translateY(-1px); }
 .mascotte-widget.content .mascotte-bras-d { animation: agiter-bras 0.6s ease; }
 .mascotte-widget.content .mascotte-bras-g { animation: agiter-bras 0.6s ease 0.05s; }
 
