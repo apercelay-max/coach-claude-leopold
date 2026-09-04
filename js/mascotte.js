@@ -14,31 +14,93 @@ const PHRASES_ACCUEIL = [
   "Prêt·e à devenir la terreur des évaluations de 5ème ?",
 ];
 
-const PHRASES_CORRECT = [
-  "Boom 💥 en plein dans le mille ! Même une calculatrice aurait été jalouse.",
-  "Alors là... chapeau bas 🎩 ! T'as dégainé plus vite que ton ombre.",
-  "Officiellement, t'es en feu 🔥 aujourd'hui. Quelqu'un a un extincteur ?",
-  "Pile poil ! Je note ça dans mon carnet « Léopold est un génie », page 47.",
-  "Impeccable ! À ce rythme, c'est moi qui vais devoir réviser pour te suivre.",
-  "Et hop, une de plus ! Tu collectionnes les bonnes réponses comme d'autres les cartes.",
+/*
+ * Réactions "pertinentes" : plutôt que de piocher au hasard dans une seule
+ * grande liste générique, Claude choisit dans un mélange de phrases
+ * spécifiques à la matière du moment + un fond commun de phrases
+ * génériques — et pioche en plus dans un petit bonus réservé aux questions
+ * difficiles (difficulte >= 2) réussies, pour que le niveau de compliment
+ * reste calibré sur le niveau réel de la question (pas de superlatifs sur
+ * un exercice facile). Tout reste 100 % local, aucun appel réseau.
+ */
+
+const PHRASES_CORRECT_GENERIQUES = [
   "Nickel ! Si les bonnes réponses étaient des étoiles, tu serais en train de fonder ta galaxie.",
-  "Parfait ! Franchement, je commence à me demander qui aide qui, là.",
+  "Pile poil ! Je note ça dans mon carnet « Léopold est un génie », page 47.",
+  "Et hop, une de plus ! Tu collectionnes les bonnes réponses comme d'autres les cartes.",
   "Dans le mille ! Ton cerveau mérite une petite pause... mais juste une petite, hein 😏",
   `Bravo ${PRENOM} ! C'est le genre de réponse qui donne des frissons à un robot comme moi.`,
+  "Officiellement, t'es en feu 🔥 aujourd'hui. Quelqu'un a un extincteur ?",
 ];
 
-const PHRASES_ENCOURAGEMENT = [
-  "Raté... mais version élégante ! On retente, le prochain est pour toi.",
-  "Pas tout à fait — mais bon, même les meilleurs se plantent sur un exercice de temps en temps.",
-  "Oups ! Ça arrive même aux meilleurs cerveaux — le mien inclus, parfois, chut 🤫",
-  "Presque ! Il te manquait juste... un petit détail. Mais sinon, très bien tenté.",
-  "Aïe, non — mais l'important c'est d'avoir osé. Moi j'appelle ça du courage.",
-  "Manqué de peu ! Enfin... disons manqué, mais avec panache.",
+const PHRASES_CORRECT_PAR_MATIERE = {
+  maths: [
+    "Boom 💥 en plein dans le mille ! Pythagore aurait applaudi.",
+    "Exact ! Tes neurones calculent plus vite qu'une calculatrice, et avec plus de style.",
+    "Précis, net, sans bavure. T'es en train de devenir dangereux en maths.",
+    "Nickel ! Cette réponse, je l'encadre et je l'accroche au mur.",
+  ],
+  francais: [
+    "Parfait ! Ta grammaire n'a plus aucun secret pour toi — enfin, presque plus.",
+    "Exact ! Tu maries les mots mieux qu'un dictionnaire.",
+    "Bien vu ! Cette phrase n'avait aucune chance face à toi.",
+    "Impeccable ! Même Molière aurait hoché la tête.",
+  ],
+  histoire_geo: [
+    "Exact ! Tu maîtrises ça mieux qu'un manuel scolaire.",
+    "Dans le mille ! L'Histoire n'a plus aucun secret pour toi.",
+    "Bien joué ! Un futur passionné de géographie, je le sens.",
+  ],
+  sciences: [
+    "Exact ! Ton cerveau enchaîne les bonnes réactions, au sens propre.",
+    "Impeccable, petit·e scientifique !",
+    "Bien vu ! Tu observes comme un vrai chercheur.",
+  ],
+  anglais: [
+    "Well done! Ton anglais devient redoutable.",
+    "Exact ! Bientôt tu corrigeras mes fautes en anglais.",
+    "Nice one! Cette réponse, native speaker validée.",
+  ],
+};
+
+const PHRASES_CORRECT_DIFFICILE = [
+  "Alors LÀ, chapeau. C'était une question corsée, et tu l'as eue sans trembler.",
+  "Sérieusement impressionnant — ce niveau de question, ce n'est pas donné à tout le monde.",
+  "Tu viens de battre une question difficile. Je note ça dans les annales.",
+];
+
+const PHRASES_ENCOURAGEMENT_GENERIQUES = [
   "Ce n'est pas ça, mais regarde l'explication : après ça, cette question n'aura plus de secret pour toi.",
   "Pas grave du tout ! Même les meilleurs joueurs ratent des tirs — toi, tu progresses à chaque essai.",
   "Loupé, mais je crois en toi à 100 %, et je ne me trompe jamais sur ce genre de choses (enfin, presque).",
+  "Aïe, non — mais l'important c'est d'avoir osé. Moi j'appelle ça du courage.",
   "Ce n'était pas la bonne réponse... mais c'était sûrement la plus créative que j'ai vue aujourd'hui 😄",
 ];
+
+const PHRASES_ENCOURAGEMENT_PAR_MATIERE = {
+  maths: [
+    "Presque ! Les nombres relatifs jouent souvent ce genre de tour — regarde l'explication, ça va cliquer.",
+    "Raté de peu. En maths, une petite règle mal appliquée peut tout faire basculer : on la retient et on repart.",
+    "Pas cette fois, mais ton raisonnement n'était pas loin. On ajuste et on retente.",
+  ],
+  francais: [
+    "Pas tout à fait — le français adore ses petites exceptions, celle-ci en fait partie.",
+    "Presque ! Un accord ou une terminaison a dû te jouer un tour. On regarde ensemble.",
+    "Raté, mais c'est le genre de piège qui, une fois vu, ne te reprend plus jamais.",
+  ],
+  histoire_geo: [
+    "Pas cette fois, mais les dates et les lieux, ça se retient avec un peu de pratique — on y revient.",
+    "Presque ! L'Histoire est pleine de détails piégeux, celui-là t'a eu, pas les prochains.",
+  ],
+  sciences: [
+    "Pas tout à fait, mais en sciences, une erreur, c'est juste une expérience qui n'a pas marché du premier coup.",
+    "Presque ! On ajuste l'hypothèse et on retente.",
+  ],
+  anglais: [
+    "Not quite, mais l'anglais adore ses irrégularités — celle-ci en fait partie, on la retient.",
+    "Presque ! Un petit mot piège, ça arrive même aux bilingues distraits.",
+  ],
+};
 
 const PHRASES_BLAGUES = [
   "Que dit un 8 à un 0 ? Belle ceinture ! 😄",
@@ -109,14 +171,23 @@ function declencherReaction(classe, dureeMs) {
   setTimeout(() => widget.classList.remove(classe), dureeMs);
 }
 
-function mascotteReagitBonneReponse() {
-  mascotteDit(choisirAuHasard(PHRASES_CORRECT));
+function mascotteReagitBonneReponse(matiereCode, difficulte) {
+  let pool = [
+    ...PHRASES_CORRECT_GENERIQUES,
+    ...(PHRASES_CORRECT_PAR_MATIERE[matiereCode] || []),
+  ];
+  if (difficulte >= 2) pool = pool.concat(PHRASES_CORRECT_DIFFICILE);
+  mascotteDit(choisirAuHasard(pool));
   declencherReaction("content", 750);
   lancerConfettis();
 }
 
-function mascotteReagitMauvaiseReponse() {
-  mascotteDit(choisirAuHasard(PHRASES_ENCOURAGEMENT));
+function mascotteReagitMauvaiseReponse(matiereCode) {
+  const pool = [
+    ...PHRASES_ENCOURAGEMENT_GENERIQUES,
+    ...(PHRASES_ENCOURAGEMENT_PAR_MATIERE[matiereCode] || []),
+  ];
+  mascotteDit(choisirAuHasard(pool));
   declencherReaction("encourage", 600);
 }
 

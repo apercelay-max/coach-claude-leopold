@@ -334,8 +334,8 @@ function valider() {
     document.getElementById("correction-verdict").textContent = correct ? "✅ Bonne réponse !" : "✏️ Pas tout à fait…";
     document.getElementById("correction-explication").textContent = exercice.explication;
 
-    if (correct) mascotteReagitBonneReponse();
-    else mascotteReagitMauvaiseReponse();
+    if (correct) mascotteReagitBonneReponse(exercice.matiere, exercice.difficulte);
+    else mascotteReagitMauvaiseReponse(exercice.matiere);
   } else {
     mascotteAccuseReceptionEvaluation();
   }
