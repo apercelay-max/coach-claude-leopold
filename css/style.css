@@ -36,6 +36,9 @@
 
 * { box-sizing: border-box; }
 
+/* L'attribut HTML `hidden` doit toujours gagner, même sur un enfant flex. */
+[hidden] { display: none !important; }
+
 html, body {
   margin: 0;
   padding: 0;

@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "coach-claude-static",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8934",
+        "--directory",
+        "/Users/macbookairdetonio/Library/CloudStorage/OneDrive-Personnel/Documents/Claude/Projects/Appli revision Léopold"
+      ],
+      "port": 8934
+    }
+  ]
+}
