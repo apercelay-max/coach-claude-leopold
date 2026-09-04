@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach Claude — Les révisions de Léopold</title>
+<meta name="description" content="L'appli de révisions de Léopold (5ème), avec Coach Claude : exercices, évaluations, encouragements et un peu d'humour.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="entete">
+  <div class="entete-inner">
+    <button type="button" class="logo" id="btn-logo" aria-label="Retour à l'accueil">
+      <span class="logo-emoji">🎓</span>
+      <span class="logo-texte">Coach Claude</span>
+    </button>
+    <div class="entete-stats" id="entete-stats" hidden>
+      <span class="pastille" id="pastille-niveau">Niveau 1</span>
+      <span class="pastille pastille-xp" id="pastille-xp">0 XP</span>
+    </div>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- ===================== ACCUEIL ===================== -->
+  <section class="ecran" id="ecran-accueil">
+    <div class="conteneur conteneur-etroit centre">
+      <h1 class="titre-principal">Salut Léopold&nbsp;! 👋</h1>
+      <p class="sous-titre">Prêt·e à réviser ta 5ème avec un vrai bonhomme dans ton camp&nbsp;?</p>
+
+      <div class="cartes-accueil">
+        <button type="button" class="carte-action carte-action--revision" data-mode="revision">
+          <span class="carte-action-emoji">📘</span>
+          <span class="carte-action-titre">Réviser</span>
+          <span class="carte-action-desc">Des exercices par matière, correction immédiate, indices si besoin.</span>
+        </button>
+        <button type="button" class="carte-action carte-action--evaluation" data-mode="evaluation">
+          <span class="carte-action-emoji">📝</span>
+          <span class="carte-action-titre">Passer une évaluation</span>
+          <span class="carte-action-desc">Un vrai petit contrôle chronomètré... enfin presque. Note sur 20 à la fin.</span>
+        </button>
+        <button type="button" class="carte-action carte-action--progres" id="btn-voir-progres">
+          <span class="carte-action-emoji">📊</span>
+          <span class="carte-action-titre">Mes progrès</span>
+          <span class="carte-action-desc">XP, niveau, et les matières où tu cartonnes déjà.</span>
+        </button>
+      </div>
+
+      <p class="note-demo">
+        ✨ Les exercices ci-dessous sont des exemples de démarrage. Dès que de vrais devoirs et documents de Léopold arrivent, Claude les remplace par du contenu sur-mesure.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== CHOIX DE LA MATIÈRE ===================== -->
+  <section class="ecran hidden" id="ecran-matieres">
+    <div class="conteneur">
+      <button type="button" class="lien-retour" data-retour="accueil">← Accueil</button>
+      <h2 class="titre-ecran" id="titre-matieres">Choisis une matière</h2>
+      <div class="grille-matieres" id="grille-matieres"><!-- rempli en JS --></div>
+    </div>
+  </section>
+
+  <!-- ===================== EXERCICE ===================== -->
+  <section class="ecran hidden" id="ecran-exercice">
+    <div class="conteneur conteneur-etroit">
+      <div class="barre-entete-exercice">
+        <button type="button" class="lien-retour" data-retour="accueil">← Quitter</button>
+        <div class="badges-exercice">
+          <span class="badge-mode" id="badge-mode"></span>
+          <span class="compteur-question" id="compteur-question"></span>
+        </div>
+      </div>
+
+      <div class="barre-progression">
+        <div class="barre-progression-remplissage" id="barre-progression-remplissage"></div>
+      </div>
+
+      <div class="carte-question" id="carte-question">
+        <span class="badge-matiere" id="badge-matiere-question"></span>
+        <p class="enonce" id="enonce-question"></p>
+        <div class="zone-reponse" id="zone-reponse"><!-- rempli en JS selon le type --></div>
+
+        <div class="actions-question">
+          <button type="button" class="btn btn-fantome" id="btn-indice" hidden>💡 Un indice ?</button>
+          <button type="button" class="btn btn-principal" id="btn-valider" disabled>Valider ma réponse</button>
+          <button type="button" class="btn btn-principal hidden" id="btn-suivant">Suivant →</button>
+        </div>
+      </div>
+
+      <p class="indice" id="zone-indice" hidden></p>
+
+      <div class="carte-correction hidden" id="carte-correction">
+        <p class="correction-verdict" id="correction-verdict"></p>
+        <p class="correction-explication" id="correction-explication"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RÉSULTATS ===================== -->
+  <section class="ecran hidden" id="ecran-resultats">
+    <div class="conteneur conteneur-etroit centre">
+      <div class="resultat-emoji" id="resultat-emoji">🏆</div>
+      <h2 class="titre-ecran" id="resultat-titre">Session terminée&nbsp;!</h2>
+      <p class="resultat-score" id="resultat-score"></p>
+      <p class="resultat-xp" id="resultat-xp"></p>
+
+      <div class="recap-evaluation hidden" id="recap-evaluation"></div>
+
+      <div class="boutons-resultats">
+        <button type="button" class="btn btn-principal" id="btn-rejouer">Recommencer</button>
+        <button type="button" class="btn btn-fantome" data-retour="accueil">Retour à l'accueil</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROGRÈS ===================== -->
+  <section class="ecran hidden" id="ecran-progres">
+    <div class="conteneur conteneur-etroit">
+      <button type="button" class="lien-retour" data-retour="accueil">← Accueil</button>
+      <h2 class="titre-ecran">Mes progrès</h2>
+
+      <div class="carte-niveau">
+        <p class="niveau-titre" id="progres-titre-niveau">Apprenti Réviseur</p>
+        <div class="barre-progression barre-progression--niveau">
+          <div class="barre-progression-remplissage" id="progres-barre-xp"></div>
+        </div>
+        <p class="niveau-detail" id="progres-detail-xp"></p>
+      </div>
+
+      <div class="carte-serie" id="carte-serie"></div>
+
+      <h3 class="sous-titre-section">Par matière</h3>
+      <div class="liste-matieres-progres" id="liste-matieres-progres"><!-- rempli en JS --></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== MASCOTTE PERSISTANTE ===================== -->
+<div class="mascotte-widget" id="mascotte-widget">
+  <div class="bulle-parole" id="bulle-parole">
+    <p id="texte-mascotte">Salut&nbsp;!</p>
+  </div>
+  <button type="button" class="mascotte" id="mascotte" aria-label="Cliquer pour un petit mot de Coach Claude">
+    <svg class="mascotte-svg" id="mascotte-svg" viewBox="0 0 100 100" aria-hidden="true">
+      <ellipse class="mascotte-ombre" cx="50" cy="93" rx="24" ry="4.5"></ellipse>
+      <g class="mascotte-corps">
+        <g class="mascotte-bras mascotte-bras-g"><path d="M27 62 Q10 56 12 38"></path></g>
+        <g class="mascotte-bras mascotte-bras-d"><path d="M73 62 Q90 56 88 38"></path></g>
+        <path class="mascotte-etincelle" d="M50 4 L54.5 15 L66 19.5 L54.5 24 L50 35 L45.5 24 L34 19.5 L45.5 15 Z"></path>
+        <circle class="mascotte-tete" cx="50" cy="54" r="32"></circle>
+        <g class="mascotte-visage">
+          <ellipse class="mascotte-oeil mascotte-oeil-g" cx="39.5" cy="50" rx="4.2" ry="5.6"></ellipse>
+          <ellipse class="mascotte-oeil mascotte-oeil-d" cx="60.5" cy="50" rx="4.2" ry="5.6"></ellipse>
+          <path class="mascotte-bouche" id="mascotte-bouche" d="M38 63 Q50 72 62 63"></path>
+        </g>
+      </g>
+    </svg>
+  </button>
+</div>
+
+<div class="confettis" id="confettis" aria-hidden="true"></div>
+
+<script src="js/data.js"></script>
+<script src="js/mascotte.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,570 @@
+/* =========================================================================
+   Coach Claude — Les révisions de Léopold
+   Feuille de style unique. Variables CSS en tête pour re-thémer facilement.
+   ========================================================================= */
+
+:root {
+  --creme: #FFF8F0;
+  --creme-fonce: #FBEEE0;
+  --encre: #2B2320;
+  --encre-douce: #6B5F58;
+  --orange: #D97757;
+  --orange-fonce: #B85C3F;
+  --orange-clair: #FCE3D6;
+  --violet: #7C6FE0;
+  --violet-clair: #EAE7FC;
+  --vert: #2F9E6E;
+  --vert-clair: #DFF5EA;
+  --rouge-doux: #E0654F;
+  --bleu: #4C7CE0;
+  --bleu-clair: #E3EBFC;
+  --rose: #D9548F;
+  --rose-clair: #FBE3ED;
+  --ambre: #C98A1F;
+  --ambre-clair: #FBEED2;
+  --emeraude: #24916A;
+  --emeraude-clair: #DEF4EA;
+  --indigo: #5B5CD6;
+  --indigo-clair: #E7E7FB;
+  --ombre: 0 4px 16px rgba(43, 35, 32, 0.08);
+  --ombre-forte: 0 10px 30px rgba(43, 35, 32, 0.14);
+  --rayon: 20px;
+  --rayon-petit: 12px;
+  --police-titre: "Baloo 2", "Comic Sans MS", ui-rounded, sans-serif;
+  --police-texte: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--creme);
+  color: var(--encre);
+  font-family: var(--police-texte);
+  min-height: 100%;
+}
+
+body {
+  padding-bottom: 140px; /* place pour la mascotte flottante */
+}
+
+h1, h2, h3 { font-family: var(--police-titre); margin: 0; }
+
+button { font-family: inherit; }
+
+.hidden { display: none !important; }
+
+img, svg { max-width: 100%; }
+
+/* ---------- En-tête ---------- */
+
+.entete {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(255, 248, 240, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 2px solid var(--creme-fonce);
+}
+
+.entete-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.logo-emoji { font-size: 1.6rem; }
+
+.logo-texte {
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--orange-fonce);
+}
+
+.entete-stats { display: flex; gap: 8px; }
+
+.pastille {
+  background: var(--orange-clair);
+  color: var(--orange-fonce);
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.pastille-xp { background: var(--violet-clair); color: var(--violet); }
+
+/* ---------- Layout générique ---------- */
+
+.conteneur { max-width: 900px; margin: 0 auto; padding: 28px 20px 20px; }
+.conteneur-etroit { max-width: 640px; }
+.centre { text-align: center; }
+
+.titre-principal {
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  color: var(--orange-fonce);
+}
+
+.sous-titre { color: var(--encre-douce); font-size: 1.1rem; margin-top: 8px; }
+
+.titre-ecran { font-size: 1.6rem; margin-bottom: 18px; color: var(--orange-fonce); }
+
+.sous-titre-section {
+  font-size: 1.05rem;
+  margin: 22px 0 10px;
+  color: var(--encre-douce);
+}
+
+.lien-retour {
+  background: none;
+  border: none;
+  color: var(--encre-douce);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 6px 0;
+  font-size: 0.95rem;
+}
+.lien-retour:hover { color: var(--orange-fonce); }
+
+/* ---------- Accueil ---------- */
+
+.cartes-accueil {
+  display: grid;
+  gap: 14px;
+  margin-top: 30px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .cartes-accueil { grid-template-columns: repeat(3, 1fr); }
+}
+
+.carte-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  text-align: left;
+  background: white;
+  border: 2px solid var(--creme-fonce);
+  border-radius: var(--rayon);
+  padding: 20px;
+  cursor: pointer;
+  box-shadow: var(--ombre);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.carte-action:hover { transform: translateY(-3px); box-shadow: var(--ombre-forte); }
+.carte-action--revision:hover { border-color: var(--bleu); }
+.carte-action--evaluation:hover { border-color: var(--rose); }
+.carte-action--progres:hover { border-color: var(--emeraude); }
+
+.carte-action-emoji { font-size: 2rem; }
+.carte-action-titre { font-family: var(--police-titre); font-weight: 700; font-size: 1.15rem; }
+.carte-action-desc { color: var(--encre-douce); font-size: 0.9rem; line-height: 1.4; }
+
+.note-demo {
+  margin-top: 34px;
+  color: var(--encre-douce);
+  font-size: 0.85rem;
+  background: var(--creme-fonce);
+  border-radius: var(--rayon-petit);
+  padding: 12px 16px;
+  line-height: 1.5;
+}
+
+/* ---------- Grille des matières ---------- */
+
+.grille-matieres {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.carte-matiere {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  border: none;
+  border-radius: var(--rayon);
+  padding: 20px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: var(--ombre);
+  transition: transform 0.15s ease;
+  color: var(--encre);
+}
+.carte-matiere:hover { transform: translateY(-3px) scale(1.01); }
+.carte-matiere-emoji { font-size: 1.8rem; }
+.carte-matiere-nom { font-family: var(--police-titre); font-weight: 700; font-size: 1.05rem; }
+.carte-matiere-meta { font-size: 0.8rem; opacity: 0.75; }
+
+/* ---------- Exercice ---------- */
+
+.barre-entete-exercice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.badges-exercice { display: flex; align-items: center; gap: 8px; }
+
+.badge-mode {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--violet-clair);
+  color: var(--violet);
+}
+
+.compteur-question { font-size: 0.85rem; color: var(--encre-douce); font-weight: 600; }
+
+.barre-progression {
+  height: 8px;
+  background: var(--creme-fonce);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.barre-progression-remplissage {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--orange), var(--rose));
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+.barre-progression--niveau { margin-top: 10px; margin-bottom: 6px; height: 10px; }
+
+.carte-question {
+  background: white;
+  border-radius: var(--rayon);
+  padding: 24px;
+  box-shadow: var(--ombre);
+}
+
+.badge-matiere {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.enonce { font-size: 1.25rem; font-weight: 700; line-height: 1.4; margin: 0 0 20px; }
+
+.zone-reponse { display: grid; gap: 10px; }
+.zone-reponse.grille-2 { grid-template-columns: 1fr 1fr; }
+
+.option-reponse {
+  border: 2px solid var(--creme-fonce);
+  background: var(--creme);
+  border-radius: var(--rayon-petit);
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+}
+.option-reponse:hover:not(:disabled) { border-color: var(--orange); transform: translateY(-1px); }
+.option-reponse.selectionnee { border-color: var(--orange); background: var(--orange-clair); }
+.option-reponse.bonne-reponse { border-color: var(--vert); background: var(--vert-clair); color: #1c6b4a; }
+.option-reponse.mauvaise-reponse { border-color: var(--rouge-doux); background: #FBE4E0; color: #a13c28; }
+.option-reponse:disabled { cursor: default; }
+
+.champ-texte {
+  border: 2px solid var(--creme-fonce);
+  border-radius: var(--rayon-petit);
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  width: 100%;
+}
+.champ-texte:focus { outline: none; border-color: var(--orange); }
+
+.actions-question {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 13px 26px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.15s ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn-principal {
+  background: var(--orange);
+  color: white;
+  box-shadow: 0 3px 0 var(--orange-fonce);
+}
+.btn-principal:hover:not(:disabled) { box-shadow: 0 5px 12px rgba(217, 119, 87, 0.4); }
+.btn-principal:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+.btn-fantome {
+  background: transparent;
+  color: var(--encre-douce);
+  border: 2px solid var(--creme-fonce);
+}
+.btn-fantome:hover { border-color: var(--orange); color: var(--orange-fonce); }
+
+.indice {
+  margin-top: 14px;
+  background: var(--ambre-clair);
+  color: #7a5610;
+  border-radius: var(--rayon-petit);
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.carte-correction {
+  margin-top: 16px;
+  border-radius: var(--rayon);
+  padding: 18px 20px;
+}
+.carte-correction.correcte { background: var(--vert-clair); }
+.carte-correction.incorrecte { background: var(--orange-clair); }
+.correction-verdict { font-weight: 800; margin: 0 0 6px; font-size: 1.05rem; }
+.correction-explication { margin: 0; color: var(--encre-douce); line-height: 1.5; }
+
+/* ---------- Résultats ---------- */
+
+.resultat-emoji { font-size: 3.5rem; margin-bottom: 6px; }
+.resultat-score { font-size: 1.15rem; color: var(--encre-douce); margin: 6px 0 0; }
+.resultat-xp { color: var(--violet); font-weight: 700; margin: 6px 0 0; }
+
+.recap-evaluation {
+  text-align: left;
+  margin-top: 26px;
+  display: grid;
+  gap: 10px;
+}
+.recap-item {
+  background: white;
+  border-radius: var(--rayon-petit);
+  padding: 14px 16px;
+  box-shadow: var(--ombre);
+  border-left: 5px solid var(--creme-fonce);
+}
+.recap-item.correcte { border-left-color: var(--vert); }
+.recap-item.incorrecte { border-left-color: var(--rouge-doux); }
+.recap-item p { margin: 0; font-size: 0.9rem; }
+.recap-item .recap-question { font-weight: 700; margin-bottom: 4px; }
+.recap-item .recap-explication { color: var(--encre-douce); margin-top: 4px; }
+
+.boutons-resultats {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Progrès ---------- */
+
+.carte-niveau, .carte-serie {
+  background: white;
+  border-radius: var(--rayon);
+  padding: 20px 22px;
+  box-shadow: var(--ombre);
+  margin-bottom: 14px;
+}
+.niveau-titre { font-family: var(--police-titre); font-weight: 700; font-size: 1.2rem; color: var(--orange-fonce); }
+.niveau-detail { font-size: 0.85rem; color: var(--encre-douce); margin: 0; }
+.carte-serie { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--encre-douce); }
+
+.liste-matieres-progres { display: grid; gap: 12px; }
+.ligne-matiere-progres {
+  background: white;
+  border-radius: var(--rayon-petit);
+  padding: 14px 16px;
+  box-shadow: var(--ombre);
+}
+.ligne-matiere-progres-tete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+.etoiles { font-size: 0.95rem; letter-spacing: 1px; }
+
+/* =========================================================================
+   Mascotte — Coach Claude, le bonhomme animé
+   ========================================================================= */
+
+.mascotte-widget {
+  position: fixed;
+  right: 18px;
+  bottom: 14px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.bulle-parole {
+  max-width: min(280px, 70vw);
+  background: white;
+  border-radius: 18px;
+  border-bottom-right-radius: 4px;
+  padding: 12px 16px;
+  box-shadow: var(--ombre-forte);
+  animation: apparition-bulle 0.25s ease;
+}
+.bulle-parole p {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--encre);
+}
+
+@keyframes apparition-bulle {
+  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.mascotte {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 96px;
+  height: 96px;
+  filter: drop-shadow(0 6px 10px rgba(43, 35, 32, 0.18));
+}
+.mascotte:active { transform: scale(0.95); }
+
+.mascotte-svg { width: 100%; height: 100%; overflow: visible; }
+
+.mascotte-corps { animation: flotter 3.4s ease-in-out infinite; transform-origin: 50% 90%; }
+
+@keyframes flotter {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(-1.5deg); }
+}
+
+.mascotte-tete { fill: var(--orange); }
+.mascotte-ombre { fill: rgba(43, 35, 32, 0.15); }
+.mascotte-etincelle { fill: var(--ambre); }
+
+.mascotte-oeil { fill: var(--encre); animation: clignement 4.8s ease-in-out infinite; transform-origin: center; }
+.mascotte-oeil-d { animation-delay: 0.06s; }
+
+@keyframes clignement {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.12); }
+}
+
+.mascotte-bouche {
+  fill: none;
+  stroke: var(--encre);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  transform-origin: 50px 63px;
+  transition: transform 0.2s ease;
+}
+
+.mascotte-bras { transform-origin: 50px 55px; }
+.mascotte-bras path { fill: none; stroke: var(--orange); stroke-width: 7; stroke-linecap: round; }
+.mascotte-bras-g { transform-origin: 30px 55px; }
+.mascotte-bras-d { transform-origin: 70px 55px; }
+
+/* Réaction : bonne réponse — petit saut de joie + grand sourire */
+.mascotte-widget.content .mascotte-corps { animation: saut-de-joie 0.7s ease; }
+.mascotte-widget.content .mascotte-bouche { transform: scaleY(1.5) translateY(2px); }
+.mascotte-widget.content .mascotte-bras-d { animation: agiter-bras 0.6s ease; }
+.mascotte-widget.content .mascotte-bras-g { animation: agiter-bras 0.6s ease 0.05s; }
+
+@keyframes saut-de-joie {
+  0% { transform: translateY(0) rotate(0deg); }
+  30% { transform: translateY(-22px) rotate(-7deg); }
+  55% { transform: translateY(0) rotate(5deg); }
+  75% { transform: translateY(-10px) rotate(-3deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+@keyframes agiter-bras {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-25deg); }
+}
+
+/* Réaction : à revoir — petit dodelinement chaleureux, jamais triste */
+.mascotte-widget.encourage .mascotte-corps { animation: dodeliner 0.55s ease; }
+
+@keyframes dodeliner {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-6deg); }
+  75% { transform: rotate(6deg); }
+}
+
+/* Réaction : clic pour une blague — petit rebond */
+.mascotte-widget.blague .mascotte-corps { animation: rebond-leger 0.4s ease; }
+@keyframes rebond-leger {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08) translateY(-4px); }
+}
+
+/* ---------- Confettis ---------- */
+
+.confettis {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -12px;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  animation: chute-confetti 1.5s ease-in forwards;
+}
+
+@keyframes chute-confetti {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(90vh) rotate(600deg); opacity: 0; }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 480px) {
+  .mascotte { width: 76px; height: 76px; }
+  .entete-stats { display: none; }
+  .zone-reponse.grille-2 { grid-template-columns: 1fr; }
+  .cartes-accueil { grid-template-columns: 1fr; }
+  body { padding-bottom: 120px; }
+}
