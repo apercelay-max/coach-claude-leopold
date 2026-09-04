@@ -496,8 +496,8 @@ img, svg { max-width: 100%; }
   95% { transform: scaleY(0.12); }
 }
 
-.mascotte-bras-g { transform-origin: 30px 43px; }
-.mascotte-bras-d { transform-origin: 70px 43px; }
+.mascotte-bras-g { transform-origin: 26px 43px; }
+.mascotte-bras-d { transform-origin: 74px 43px; }
 
 /* Réaction : bonne réponse — petit saut de joie + grands yeux */
 .mascotte-widget.content .mascotte-corps { animation: saut-de-joie 0.7s ease; }
