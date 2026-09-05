@@ -12,6 +12,7 @@ const COULEURS_MATIERE = {
   ambre: { fond: "var(--ambre-clair)", texte: "var(--ambre)" },
   emeraude: { fond: "var(--emeraude-clair)", texte: "var(--emeraude)" },
   indigo: { fond: "var(--indigo-clair)", texte: "var(--indigo)" },
+  violet: { fond: "var(--violet-clair)", texte: "var(--violet)" },
 };
 
 const ECRANS = ["accueil", "matieres", "exercice", "resultats", "progres"];
