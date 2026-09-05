@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claude — Les révisions de Léopold</title>
-<meta name="description" content="L'appli de révisions de Léopold (5ème), avec Claude : exercices, évaluations, encouragements et un peu d'humour.">
+<meta name="description" content="L'appli de révisions de Léopold (5ème), avec Claude : exercices par matière, correction immédiate, encouragements et un peu d'humour.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,10 +19,6 @@
       <span class="logo-emoji">🎓</span>
       <span class="logo-texte">Claude</span>
     </button>
-    <div class="entete-stats" id="entete-stats" hidden>
-      <span class="pastille" id="pastille-niveau">Niveau 1</span>
-      <span class="pastille pastille-xp" id="pastille-xp">0 XP</span>
-    </div>
   </div>
 </header>
 
@@ -35,25 +31,15 @@
       <p class="sous-titre">Prêt·e à réviser ta 5ème avec un vrai bonhomme dans ton camp&nbsp;?</p>
 
       <div class="cartes-accueil">
-        <button type="button" class="carte-action carte-action--revision" data-mode="revision">
+        <button type="button" class="carte-action carte-action--revision" id="btn-reviser">
           <span class="carte-action-emoji">📘</span>
           <span class="carte-action-titre">Réviser</span>
           <span class="carte-action-desc">Des exercices par matière, correction immédiate, indices si besoin.</span>
         </button>
-        <button type="button" class="carte-action carte-action--evaluation" data-mode="evaluation">
-          <span class="carte-action-emoji">📝</span>
-          <span class="carte-action-titre">Passer une évaluation</span>
-          <span class="carte-action-desc">Un vrai petit contrôle chronomètré... enfin presque. Note sur 20 à la fin.</span>
-        </button>
-        <button type="button" class="carte-action carte-action--progres" id="btn-voir-progres">
-          <span class="carte-action-emoji">📊</span>
-          <span class="carte-action-titre">Mes progrès</span>
-          <span class="carte-action-desc">XP, niveau, et les matières où tu cartonnes déjà.</span>
-        </button>
       </div>
 
       <p class="note-demo">
-        ✨ Les exercices ci-dessous sont des exemples de démarrage. Dès que de vrais devoirs et documents de Léopold arrivent, Claude les remplace par du contenu sur-mesure.
+        ✨ Les exercices sont basés sur les vrais cours et devoirs de Léopold. Dès que de nouveaux documents arrivent, Claude ajoute les matières et chapitres correspondants.
       </p>
     </div>
   </section>
@@ -62,7 +48,7 @@
   <section class="ecran hidden" id="ecran-matieres">
     <div class="conteneur">
       <button type="button" class="lien-retour" data-retour="accueil">← Accueil</button>
-      <h2 class="titre-ecran" id="titre-matieres">Choisis une matière</h2>
+      <h2 class="titre-ecran">Choisis une matière à réviser</h2>
       <div class="grille-matieres" id="grille-matieres"><!-- rempli en JS --></div>
     </div>
   </section>
@@ -72,10 +58,7 @@
     <div class="conteneur conteneur-etroit">
       <div class="barre-entete-exercice">
         <button type="button" class="lien-retour" data-retour="accueil">← Quitter</button>
-        <div class="badges-exercice">
-          <span class="badge-mode" id="badge-mode"></span>
-          <span class="compteur-question" id="compteur-question"></span>
-        </div>
+        <span class="compteur-question" id="compteur-question"></span>
       </div>
 
       <div class="barre-progression">
@@ -107,37 +90,24 @@
   <section class="ecran hidden" id="ecran-resultats">
     <div class="conteneur conteneur-etroit centre">
       <div class="resultat-emoji" id="resultat-emoji">🏆</div>
-      <h2 class="titre-ecran" id="resultat-titre">Session terminée&nbsp;!</h2>
+      <h2 class="titre-ecran" id="resultat-titre">Séance terminée&nbsp;!</h2>
       <p class="resultat-score" id="resultat-score"></p>
-      <p class="resultat-xp" id="resultat-xp"></p>
 
-      <div class="recap-evaluation hidden" id="recap-evaluation"></div>
+      <div class="recap-session" id="recap-session"></div>
+
+      <div class="bloc-email">
+        <label class="etiquette-email" for="champ-email-parent">Email pour recevoir le résumé :</label>
+        <div class="ligne-email">
+          <input type="email" class="champ-texte" id="champ-email-parent" placeholder="parent@exemple.com">
+          <button type="button" class="btn btn-principal" id="btn-envoyer-email">📧 Envoyer</button>
+        </div>
+        <p class="note-email" id="note-email" hidden></p>
+      </div>
 
       <div class="boutons-resultats">
-        <button type="button" class="btn btn-principal" id="btn-rejouer">Recommencer</button>
+        <button type="button" class="btn btn-fantome" id="btn-rejouer">Recommencer</button>
         <button type="button" class="btn btn-fantome" data-retour="accueil">Retour à l'accueil</button>
       </div>
-    </div>
-  </section>
-
-  <!-- ===================== PROGRÈS ===================== -->
-  <section class="ecran hidden" id="ecran-progres">
-    <div class="conteneur conteneur-etroit">
-      <button type="button" class="lien-retour" data-retour="accueil">← Accueil</button>
-      <h2 class="titre-ecran">Mes progrès</h2>
-
-      <div class="carte-niveau">
-        <p class="niveau-titre" id="progres-titre-niveau">Apprenti Réviseur</p>
-        <div class="barre-progression barre-progression--niveau">
-          <div class="barre-progression-remplissage" id="progres-barre-xp"></div>
-        </div>
-        <p class="niveau-detail" id="progres-detail-xp"></p>
-      </div>
-
-      <div class="carte-serie" id="carte-serie"></div>
-
-      <h3 class="sous-titre-section">Par matière</h3>
-      <div class="liste-matieres-progres" id="liste-matieres-progres"><!-- rempli en JS --></div>
     </div>
   </section>
 

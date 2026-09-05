@@ -40,21 +40,10 @@ const PHRASES_CORRECT_PAR_MATIERE = {
     "Précis, net, sans bavure. T'es en train de devenir dangereux en maths.",
     "Nickel ! Cette réponse, je l'encadre et je l'accroche au mur.",
   ],
-  francais: [
-    "Parfait ! Ta grammaire n'a plus aucun secret pour toi — enfin, presque plus.",
-    "Exact ! Tu maries les mots mieux qu'un dictionnaire.",
-    "Bien vu ! Cette phrase n'avait aucune chance face à toi.",
-    "Impeccable ! Même Molière aurait hoché la tête.",
-  ],
-  histoire_geo: [
-    "Exact ! Tu maîtrises ça mieux qu'un manuel scolaire.",
-    "Dans le mille ! L'Histoire n'a plus aucun secret pour toi.",
-    "Bien joué ! Un futur passionné de géographie, je le sens.",
-  ],
-  sciences: [
-    "Exact ! Ton cerveau enchaîne les bonnes réactions, au sens propre.",
-    "Impeccable, petit·e scientifique !",
-    "Bien vu ! Tu observes comme un vrai chercheur.",
+  espagnol: [
+    "¡Perfecto! Ton espagnol devient redoutable.",
+    "Exact ! Bientôt tu discutes avec Cristóbal sans souci.",
+    "¡Muy bien! Cette réponse, hispanophone validée.",
   ],
   anglais: [
     "Well done! Ton anglais devient redoutable.",
@@ -79,22 +68,14 @@ const PHRASES_ENCOURAGEMENT_GENERIQUES = [
 
 const PHRASES_ENCOURAGEMENT_PAR_MATIERE = {
   maths: [
-    "Presque ! Les nombres relatifs jouent souvent ce genre de tour — regarde l'explication, ça va cliquer.",
+    "Presque ! Ce genre de calcul joue souvent ce genre de tour — regarde l'explication, ça va cliquer.",
     "Raté de peu. En maths, une petite règle mal appliquée peut tout faire basculer : on la retient et on repart.",
     "Pas cette fois, mais ton raisonnement n'était pas loin. On ajuste et on retente.",
   ],
-  francais: [
-    "Pas tout à fait — le français adore ses petites exceptions, celle-ci en fait partie.",
-    "Presque ! Un accord ou une terminaison a dû te jouer un tour. On regarde ensemble.",
+  espagnol: [
+    "No pasa nada — l'espagnol adore ses petits pièges, celui-là en fait partie.",
+    "Presque ! Une conjugaison a dû te jouer un tour. On regarde ensemble.",
     "Raté, mais c'est le genre de piège qui, une fois vu, ne te reprend plus jamais.",
-  ],
-  histoire_geo: [
-    "Pas cette fois, mais les dates et les lieux, ça se retient avec un peu de pratique — on y revient.",
-    "Presque ! L'Histoire est pleine de détails piégeux, celui-là t'a eu, pas les prochains.",
-  ],
-  sciences: [
-    "Pas tout à fait, mais en sciences, une erreur, c'est juste une expérience qui n'a pas marché du premier coup.",
-    "Presque ! On ajuste l'hypothèse et on retente.",
   ],
   anglais: [
     "Not quite, mais l'anglais adore ses irrégularités — celle-ci en fait partie, on la retient.",
@@ -113,14 +94,6 @@ const PHRASES_BLAGUES = [
   "Moi aussi j'ai des devoirs, tu sais : devenir un peu plus drôle chaque jour.",
   "On me demande souvent si je préfère les maths ou le français... je réponds toujours « oui ».",
   "Pourquoi la maîtresse porte des lunettes de soleil ? Parce que ses élèves brillent. ☀️",
-];
-
-const PHRASES_EVALUATION_NEUTRE = [
-  "Réponse enregistrée ✅ On garde ça pour la correction finale.",
-  "Noté ! Question suivante...",
-  "C'est dans la boîte. On continue, tu gères.",
-  "Enregistré ! Silence radio jusqu'à la fin, comme dans un vrai contrôle.",
-  "Réponse prise en compte. Concentre-toi, la suite arrive !",
 ];
 
 const PHRASES_FIN_HAUT = [
@@ -189,10 +162,6 @@ function mascotteReagitMauvaiseReponse(matiereCode) {
   ];
   mascotteDit(choisirAuHasard(pool));
   declencherReaction("encourage", 600);
-}
-
-function mascotteAccuseReceptionEvaluation() {
-  mascotteDit(choisirAuHasard(PHRASES_EVALUATION_NEUTRE));
 }
 
 function mascotteAccueille() {

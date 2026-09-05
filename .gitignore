@@ -1,2 +1,7 @@
 .DS_Store
 Thumbs.db
+
+# Documents sources de Léopold (PDF, photos de cahiers/manuels) : contenu
+# personnel/scolaire déjà recopié dans js/data.js, à ne pas publier tel quel
+# sur le dépôt public.
+/Léopold doc 5B/
