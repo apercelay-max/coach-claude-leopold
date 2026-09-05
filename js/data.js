@@ -19,6 +19,7 @@ const MATIERES = [
   { code: "histoire_geo", nom: "Histoire-Géographie", emoji: "🌍", couleur: "ambre" },
   { code: "sciences", nom: "Sciences", emoji: "🔬", couleur: "emeraude" },
   { code: "anglais", nom: "Anglais", emoji: "🇬🇧", couleur: "indigo" },
+  { code: "espagnol", nom: "Espagnol", emoji: "🇪🇸", couleur: "violet" },
 ];
 
 /**
@@ -73,6 +74,56 @@ const EXERCICES = [
     choix: ["2/15", "3/5", "2/8", "1/15"], bonne: 0,
     indice: "On multiplie les numérateurs entre eux, puis les dénominateurs entre eux.",
     explication: "2/3 × 1/5 = (2×1)/(3×5) = 2/15.",
+  },
+
+  {
+    id: "maths-7", matiere: "maths", chapitre: "Nombres décimaux", difficulte: 1,
+    type: "qcm", question: "Une fraction décimale est une fraction dont le dénominateur est...",
+    choix: ["une puissance de 10 (10, 100, 1000...)", "toujours un nombre pair", "toujours égal à 2", "un nombre premier"], bonne: 0,
+    indice: "Pense à 1/10, 1/100, 1/1000…",
+    explication: "Une fraction décimale a pour dénominateur 10, 100, 1000, etc. (une puissance de 10).",
+  },
+  {
+    id: "maths-8", matiere: "maths", chapitre: "Nombres décimaux", difficulte: 1,
+    type: "qcm", question: "Dans le nombre décimal 143,46, quelle est la partie décimale ?",
+    choix: ["143", "46", "0,46", "1,4346"], bonne: 2,
+    indice: "La partie décimale est ce qui se trouve après la virgule, et elle est toujours plus petite que 1.",
+    explication: "143,46 = 143 (partie entière) + 0,46 (partie décimale, qui commence toujours par 0).",
+  },
+  {
+    id: "maths-9", matiere: "maths", chapitre: "Nombres décimaux", difficulte: 2,
+    type: "vrai_faux", question: "Le nombre 3 est un nombre décimal, car il peut s'écrire sous forme de fraction décimale (par exemple 30/10).",
+    reponse: true,
+    indice: "Un nombre décimal est un nombre qui peut s'écrire sous forme de fraction décimale, même les nombres entiers.",
+    explication: "Vrai : 3 = 30/10 = 300/100, etc. Tout nombre entier est aussi un nombre décimal.",
+  },
+  {
+    id: "maths-10", matiere: "maths", chapitre: "Nombres décimaux", difficulte: 2,
+    type: "qcm", question: "Comment décompose-t-on 143,46 par rangs (centaines, dizaines, unités, dixièmes, centièmes) ?",
+    choix: ["1×100 + 4×10 + 3×1 + 4×0,1 + 6×0,01", "1×1000 + 4×100 + 3×10 + 4 + 6", "14 + 3 + 46", "143 × 46"], bonne: 0,
+    indice: "Chaque chiffre a une valeur selon son rang : centaines, dizaines, unités, dixièmes, centièmes…",
+    explication: "143,46 = 1×100 + 4×10 + 3×1 + 4×0,1 + 6×0,01 : chaque chiffre est multiplié par la valeur de son rang.",
+  },
+  {
+    id: "maths-11", matiere: "maths", chapitre: "Nombres décimaux", difficulte: 2,
+    type: "qcm", question: "Quel est le plus grand entre 3,05 et 3,007 ?",
+    choix: ["3,05", "3,007", "Ils sont égaux", "Impossible à dire"], bonne: 0,
+    indice: "Complète avec des zéros pour comparer : 3,050 et 3,007. Compare ensuite chiffre par chiffre après la virgule.",
+    explication: "3,05 = 3,050. Aux dixièmes, 0 = 0 ; aux centièmes, 5 > 0. Donc 3,05 > 3,007, même si 3,007 a plus de chiffres.",
+  },
+  {
+    id: "maths-12", matiere: "maths", chapitre: "Nombres décimaux", difficulte: 2,
+    type: "qcm", question: "Range dans l'ordre croissant : 3,05 ; 3,007 ; 3,101 ; 2,99. Quel est le plus petit ?",
+    choix: ["2,99", "3,007", "3,05", "3,101"], bonne: 0,
+    indice: "Compare d'abord les parties entières : 2 ou 3 ?",
+    explication: "2,99 a pour partie entière 2, alors que les trois autres ont pour partie entière 3. 2 < 3, donc 2,99 est le plus petit.",
+  },
+  {
+    id: "maths-13", matiere: "maths", chapitre: "Nombres décimaux", difficulte: 1,
+    type: "qcm", question: "Sur une demi-droite graduée, comment appelle-t-on le nombre associé à un point ?",
+    choix: ["son abscisse", "son origine", "son unité", "son échelle"], bonne: 0,
+    indice: "C'est le mot utilisé en cours quand on place des points comme A, B, C sur la droite graduée.",
+    explication: "Le nombre associé à un point d'une demi-droite graduée s'appelle l'abscisse de ce point.",
   },
 
   // ------------------------------ Français ------------------------------
@@ -249,6 +300,85 @@ const EXERCICES = [
     choix: ["It's 3 o'clock", "It's 3 hours", "He is 3 hours", "Is 3 o'clock"], bonne: 0,
     indice: "En anglais, on ne traduit pas « heures » par « hours » pour dire l'heure.",
     explication: "“It's 3 o'clock” est la façon correcte de dire l'heure en anglais.",
+  },
+
+  // ------------------------------ Espagnol ------------------------------
+  {
+    id: "espagnol-1", matiere: "espagnol", chapitre: "Vocabulario: la vuelta al cole", difficulte: 1,
+    type: "qcm", question: "Que signifie « la vuelta » en français ?",
+    choix: ["le retour", "le voyage", "la classe", "le sac"], bonne: 0,
+    indice: "« La vuelta al cole », c'est ce qui se passe en septembre !",
+    explication: "« La vuelta » signifie « le retour » (ou « un tour ») : « la vuelta al cole » = la rentrée des classes.",
+  },
+  {
+    id: "espagnol-2", matiere: "espagnol", chapitre: "Verbos regulares en presente", difficulte: 1,
+    type: "qcm", question: "Conjugue « comer » (manger) à la 2e personne du singulier : « tú ___ ».",
+    choix: ["comes", "come", "coméis", "coman"], bonne: 0,
+    indice: "Les verbes réguliers en -er prennent -es à la 2e personne du singulier.",
+    explication: "« Tú comes » : les verbes en -ER prennent -o, -es, -e, -emos, -éis, -en au présent.",
+  },
+  {
+    id: "espagnol-3", matiere: "espagnol", chapitre: "Verbos irregulares", difficulte: 2,
+    type: "qcm", question: "Conjugue le verbe « IR » (aller) à la personne « vosotros ».",
+    choix: ["vais", "vamos", "van", "voy"], bonne: 0,
+    indice: "IR : voy, vas, va, vamos, vais, van.",
+    explication: "« Vosotros vais » : IR est un verbe très irrégulier à apprendre par cœur (voy, vas, va, vamos, vais, van).",
+  },
+  {
+    id: "espagnol-4", matiere: "espagnol", chapitre: "Gramática: la rutina", difficulte: 2,
+    type: "qcm", question: "Que signifie « soler + infinitivo » (ex : « suelo desayunar a las siete ») ?",
+    choix: ["avoir l'habitude de", "vouloir", "devoir", "pouvoir"], bonne: 0,
+    indice: "C'est la structure utilisée pour parler de sa routine habituelle.",
+    explication: "« Soler + infinitif » = avoir l'habitude de. « Suelo desayunar a las siete » = j'ai l'habitude de prendre le petit-déjeuner à sept heures.",
+  },
+  {
+    id: "espagnol-5", matiere: "espagnol", chapitre: "Verbos reflexivos", difficulte: 2,
+    type: "qcm", question: "Conjugue « despertarse » (se réveiller) à la 1ère personne du singulier.",
+    choix: ["me despierto", "te despiertas", "se despierta", "me despierta"], bonne: 0,
+    indice: "C'est un verbe à diphtongue e → ie, et n'oublie pas le pronom réfléchi ME.",
+    explication: "« Me despierto » : despertarse est un verbe réfléchi (me, te, se…) à diphtongue e → ie.",
+  },
+  {
+    id: "espagnol-6", matiere: "espagnol", chapitre: "Verbos reflexivos", difficulte: 2,
+    type: "qcm", question: "Conjugue « acostarse » (se coucher) à la 2e personne du singulier.",
+    choix: ["te acuestas", "te acuesto", "se acuesta", "te acostas"], bonne: 0,
+    indice: "C'est un verbe à diphtongue o → ue : acuesto, acuestas, acuesta…",
+    explication: "« Te acuestas » : acostarse se conjugue avec la diphtongue o → ue (me acuesto, te acuestas, se acuesta…).",
+  },
+  {
+    id: "espagnol-7", matiere: "espagnol", chapitre: "La hora", difficulte: 2,
+    type: "qcm", question: "Comment dit-on « 13:30 » en espagnol ?",
+    choix: ["Es la una y media (de la tarde)", "Son las trece y media", "Es la una menos media", "Son la una y media"], bonne: 0,
+    indice: "1h de l'après-midi se dit « la una », pas « las trece ».",
+    explication: "« Es la una y media (de la tarde) » : pour 1 heure on utilise « es la una », et « y media » pour la demie.",
+  },
+  {
+    id: "espagnol-8", matiere: "espagnol", chapitre: "Comparativos", difficulte: 2,
+    type: "reponse_courte", question: "Complète : « Ramón es ___ clásico que Carlos. » (comparatif de supériorité, un mot)",
+    reponses: ["mas", "más"],
+    indice: "Le comparatif de supériorité en espagnol se forme avec ce petit mot + adjectif + que.",
+    explication: "« Ramón es más clásico que Carlos » : más... que = plus... que.",
+  },
+  {
+    id: "espagnol-9", matiere: "espagnol", chapitre: "Ser y estar", difficulte: 2,
+    type: "qcm", question: "Complète : « Hoy nosotros ___ un poco cansados. » (fatigués, aujourd'hui)",
+    choix: ["estamos", "somos", "estáis", "son"], bonne: 0,
+    indice: "Un état temporaire (être fatigué aujourd'hui) se dit avec ESTAR, pas SER.",
+    explication: "« Estamos cansados » : ESTAR sert pour un état passager (fatigue, humeur), SER pour une qualité permanente.",
+  },
+  {
+    id: "espagnol-10", matiere: "espagnol", chapitre: "Expresar la obligación", difficulte: 1,
+    type: "qcm", question: "Que signifie « HAY QUE + infinitivo » (ex : « hay que escuchar a la profesora ») ?",
+    choix: ["Il faut...", "Je veux...", "J'ai...", "Je peux..."], bonne: 0,
+    indice: "C'est une obligation générale, qui ne dépend pas d'une personne précise.",
+    explication: "« Hay que + infinitif » = il faut... (obligation impersonnelle). « Tener que » et « deber » expriment aussi l'obligation, mais pour une personne précise (« tú tienes que... », « debes... »).",
+  },
+  {
+    id: "espagnol-11", matiere: "espagnol", chapitre: "Cultura: el lago Titicaca", difficulte: 1,
+    type: "qcm", question: "Le lac Titicaca se situe à la frontière entre quels deux pays ?",
+    choix: ["Perú y Bolivia", "México y Cuba", "España y Portugal", "Chile y Argentina"], bonne: 0,
+    indice: "C'est le plus grand lac d'Amérique du Sud, à plus de 3 800 mètres d'altitude.",
+    explication: "El lago Titicaca se encuentra en la frontera entre Perú y Bolivia : c'est un lieu sacré pour les Incas, où vit la communauté des Uros sur des îles flottantes.",
   },
 ];
 
