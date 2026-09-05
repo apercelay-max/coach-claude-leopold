@@ -18,6 +18,7 @@ const ECRANS = ["accueil", "matieres", "exercice", "resultats"];
 
 let etat = {
   matiereCode: null,
+  chapitre: null, // null = tous les chapitres de la matière
   session: [],
   index: 0,
   reponseActuelle: null,
@@ -97,7 +98,11 @@ function allerVersMatieres() {
     meta.textContent = `${nb} exercice${nb > 1 ? "s" : ""}`;
 
     carte.append(emoji, nomEl, meta);
-    carte.addEventListener("click", () => demarrerSession(matiere.code));
+    // Ouvre l'écran de la matière (chapitres) si la barre du bas est là ;
+    // sinon on garde l'ancien comportement (session directe).
+    carte.addEventListener("click", () =>
+      window.CoachNav ? window.CoachNav.ouvrirMatiere(matiere.code) : demarrerSession(matiere.code)
+    );
     grille.appendChild(carte);
   });
 
@@ -106,9 +111,14 @@ function allerVersMatieres() {
 
 /* ------------------------------- Session d'exercices ------------------------------- */
 
-function demarrerSession(matiereCode) {
+function demarrerSession(matiereCode, chapitre) {
   etat.matiereCode = matiereCode;
-  etat.session = melanger(getExercicesParMatiere(matiereCode));
+  etat.chapitre = chapitre || null;
+  let exercices = getExercicesParMatiere(matiereCode);
+  if (etat.chapitre) {
+    exercices = exercices.filter((e) => e.chapitre === etat.chapitre);
+  }
+  etat.session = melanger(exercices);
   etat.index = 0;
   etat.resultatsSession = [];
 
@@ -117,7 +127,7 @@ function demarrerSession(matiereCode) {
 }
 
 function rejouer() {
-  demarrerSession(etat.matiereCode);
+  demarrerSession(etat.matiereCode, etat.chapitre);
 }
 
 function majEnTeteExercice() {
@@ -291,6 +301,12 @@ function finDeSession() {
     bravo.className = "recap-intro";
     bravo.textContent = "🎉 Toutes les réponses étaient bonnes !";
     recap.appendChild(bravo);
+  }
+
+  // Enregistrement local des stats (js/stats.js) — purement du suivi côté
+  // navigateur, aucune donnée ne part ailleurs. Silencieux si stats.js absent.
+  if (window.CoachStats) {
+    window.CoachStats.enregistrerSession(etat.matiereCode, etat.chapitre, etat.resultatsSession);
   }
 
   mascotteDit(phraseFinDeSession(pourcentage));

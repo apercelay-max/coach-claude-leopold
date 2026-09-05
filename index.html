@@ -5,7 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claude — Les révisions de Léopold</title>
 <meta name="description" content="L'appli de révisions de Léopold (5ème), avec Claude : exercices par matière, correction immédiate, encouragements et un peu d'humour.">
+<meta name="theme-color" content="#FBF3E8">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+
+<!-- Applique le thème / la couleur d'accent AVANT le premier rendu (anti-flash).
+     Source de vérité complète : js/reglages.js. -->
+<script>
+(function () {
+  try {
+    var r = JSON.parse(localStorage.getItem("coach-claude-leopold:reglages-v1") || "{}");
+    var d = document.documentElement;
+    if (r.theme === "clair") d.setAttribute("data-theme", "light");
+    else if (r.theme === "sombre") d.setAttribute("data-theme", "dark");
+    if (r.accent && r.accent !== "corail") d.setAttribute("data-accent", r.accent);
+    if (r.accent === "perso" && r.accentPerso) d.style.setProperty("--accent", r.accentPerso);
+    if (r.nuit === "on") d.setAttribute("data-nuit", "on");
+    if (r.texte && r.texte !== "md") d.setAttribute("data-texte", r.texte);
+    if (r.radius && r.radius !== "normal") d.setAttribute("data-radius", r.radius);
+    if (r.police === "systeme") d.setAttribute("data-police", "systeme");
+    if (r.anim === "off") d.setAttribute("data-anim", "off");
+    if (r.mascotte === "off") d.setAttribute("data-mascotte", "off");
+    if (r.mascotteTaille && r.mascotteTaille !== "md") d.setAttribute("data-mascotte-taille", r.mascotteTaille);
+    if (r.contraste === "on") d.setAttribute("data-contraste", "on");
+    if (r.navGlass === "off") d.setAttribute("data-nav-glass", "off");
+    if (r.navLabels === "off") d.setAttribute("data-nav-labels", "off");
+  } catch (e) {}
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
@@ -111,6 +137,29 @@
     </div>
   </section>
 
+  <!-- ===================== ÉCRAN D'UNE MATIÈRE (chapitres) ===================== -->
+  <section class="ecran hidden" id="ecran-matiere">
+    <div class="conteneur conteneur-etroit" id="matiere-contenu"><!-- rempli par js/nav.js --></div>
+  </section>
+
+  <!-- ===================== STATS (tableau de bord) ===================== -->
+  <section class="ecran hidden" id="ecran-stats">
+    <div class="conteneur conteneur-etroit">
+      <button type="button" class="lien-retour" data-retour="accueil">← Accueil</button>
+      <h2 class="titre-ecran">📊 Mes stats</h2>
+      <div id="stats-contenu"><!-- rempli par js/stats.js --></div>
+    </div>
+  </section>
+
+  <!-- ===================== RÉGLAGES (personnalisation) ===================== -->
+  <section class="ecran hidden" id="ecran-reglages">
+    <div class="conteneur conteneur-etroit">
+      <button type="button" class="lien-retour" data-retour="accueil">← Accueil</button>
+      <h2 class="titre-ecran">⚙️ Réglages</h2>
+      <div id="reglages-contenu"><!-- rempli par js/reglages.js --></div>
+    </div>
+  </section>
+
 </main>
 
 <!-- ===================== MASCOTTE PERSISTANTE ===================== -->
@@ -143,5 +192,8 @@
 <script src="js/data.js"></script>
 <script src="js/mascotte.js"></script>
 <script src="js/app.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/reglages.js"></script>
+<script src="js/nav.js"></script>
 </body>
 </html>
