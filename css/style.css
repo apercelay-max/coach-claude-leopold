@@ -19,11 +19,7 @@
   --bleu: #4C7CE0;
   --bleu-clair: #E3EBFC;
   --rose: #D9548F;
-  --rose-clair: #FBE3ED;
-  --ambre: #C98A1F;
   --ambre-clair: #FBEED2;
-  --emeraude: #24916A;
-  --emeraude-clair: #DEF4EA;
   --indigo: #5B5CD6;
   --indigo-clair: #E7E7FB;
   --ombre: 0 4px 16px rgba(43, 35, 32, 0.08);
@@ -100,19 +96,6 @@ img, svg { max-width: 100%; }
   color: var(--orange-fonce);
 }
 
-.entete-stats { display: flex; gap: 8px; }
-
-.pastille {
-  background: var(--orange-clair);
-  color: var(--orange-fonce);
-  font-weight: 700;
-  font-size: 0.8rem;
-  padding: 5px 12px;
-  border-radius: 999px;
-}
-
-.pastille-xp { background: var(--violet-clair); color: var(--violet); }
-
 /* ---------- Layout générique ---------- */
 
 .conteneur { max-width: 900px; margin: 0 auto; padding: 28px 20px 20px; }
@@ -154,10 +137,6 @@ img, svg { max-width: 100%; }
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 640px) {
-  .cartes-accueil { grid-template-columns: repeat(3, 1fr); }
-}
-
 .carte-action {
   display: flex;
   flex-direction: column;
@@ -174,8 +153,6 @@ img, svg { max-width: 100%; }
 }
 .carte-action:hover { transform: translateY(-3px); box-shadow: var(--ombre-forte); }
 .carte-action--revision:hover { border-color: var(--bleu); }
-.carte-action--evaluation:hover { border-color: var(--rose); }
-.carte-action--progres:hover { border-color: var(--emeraude); }
 
 .carte-action-emoji { font-size: 2rem; }
 .carte-action-titre { font-family: var(--police-titre); font-weight: 700; font-size: 1.15rem; }
@@ -229,17 +206,6 @@ img, svg { max-width: 100%; }
   flex-wrap: wrap;
 }
 
-.badges-exercice { display: flex; align-items: center; gap: 8px; }
-
-.badge-mode {
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: var(--violet-clair);
-  color: var(--violet);
-}
-
 .compteur-question { font-size: 0.85rem; color: var(--encre-douce); font-weight: 600; }
 
 .barre-progression {
@@ -256,8 +222,6 @@ img, svg { max-width: 100%; }
   border-radius: 999px;
   transition: width 0.4s ease;
 }
-.barre-progression--niveau { margin-top: 10px; margin-bottom: 6px; height: 10px; }
-
 .carte-question {
   background: white;
   border-radius: var(--rayon);
@@ -362,14 +326,14 @@ img, svg { max-width: 100%; }
 
 .resultat-emoji { font-size: 3.5rem; margin-bottom: 6px; }
 .resultat-score { font-size: 1.15rem; color: var(--encre-douce); margin: 6px 0 0; }
-.resultat-xp { color: var(--violet); font-weight: 700; margin: 6px 0 0; }
 
-.recap-evaluation {
+.recap-session {
   text-align: left;
   margin-top: 26px;
   display: grid;
   gap: 10px;
 }
+.recap-intro { font-weight: 700; margin: 0; }
 .recap-item {
   background: white;
   border-radius: var(--rayon-petit);
@@ -391,35 +355,32 @@ img, svg { max-width: 100%; }
   flex-wrap: wrap;
 }
 
-/* ---------- Progrès ---------- */
-
-.carte-niveau, .carte-serie {
+.bloc-email {
+  margin-top: 28px;
   background: white;
   border-radius: var(--rayon);
-  padding: 20px 22px;
+  padding: 18px 20px;
   box-shadow: var(--ombre);
-  margin-bottom: 14px;
+  text-align: left;
 }
-.niveau-titre { font-family: var(--police-titre); font-weight: 700; font-size: 1.2rem; color: var(--orange-fonce); }
-.niveau-detail { font-size: 0.85rem; color: var(--encre-douce); margin: 0; }
-.carte-serie { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--encre-douce); }
-
-.liste-matieres-progres { display: grid; gap: 12px; }
-.ligne-matiere-progres {
-  background: white;
-  border-radius: var(--rayon-petit);
-  padding: 14px 16px;
-  box-shadow: var(--ombre);
-}
-.ligne-matiere-progres-tete {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+.etiquette-email {
+  display: block;
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
 }
-.etoiles { font-size: 0.95rem; letter-spacing: 1px; }
+.ligne-email {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ligne-email .champ-texte { flex: 1; min-width: 200px; }
+.note-email {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  color: var(--rouge-doux);
+  font-weight: 600;
+}
 
 /* =========================================================================
    Mascotte — Claude, le bonhomme animé
@@ -561,8 +522,6 @@ img, svg { max-width: 100%; }
 
 @media (max-width: 480px) {
   .mascotte { width: 76px; height: 76px; }
-  .entete-stats { display: none; }
   .zone-reponse.grille-2 { grid-template-columns: 1fr; }
-  .cartes-accueil { grid-template-columns: 1fr; }
   body { padding-bottom: 120px; }
 }

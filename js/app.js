@@ -1,33 +1,28 @@
 /* =========================================================================
    Claude — logique de l'application
    -------------------------------------------------------------------------
-   Navigation entre écrans, moteur d'exercices (révision / évaluation),
-   correction, progression (XP, niveaux, étoiles, série). Tout en
-   localStorage : aucune donnée ne quitte l'appareil.
+   Application de révision uniquement (pas d'évaluation, pas de suivi de
+   progrès) : navigation entre écrans, moteur d'exercices, correction
+   immédiate, et envoi d'un résumé de fin de session par email. Aucune
+   donnée ne quitte l'appareil, à part le brouillon d'email ouvert dans
+   Gmail à la demande de Léopold.
    ========================================================================= */
 
 const COULEURS_MATIERE = {
   bleu: { fond: "var(--bleu-clair)", texte: "var(--bleu)" },
-  rose: { fond: "var(--rose-clair)", texte: "var(--rose)" },
-  ambre: { fond: "var(--ambre-clair)", texte: "var(--ambre)" },
-  emeraude: { fond: "var(--emeraude-clair)", texte: "var(--emeraude)" },
-  indigo: { fond: "var(--indigo-clair)", texte: "var(--indigo)" },
   violet: { fond: "var(--violet-clair)", texte: "var(--violet)" },
+  indigo: { fond: "var(--indigo-clair)", texte: "var(--indigo)" },
 };
 
-const ECRANS = ["accueil", "matieres", "exercice", "resultats", "progres"];
-
-const CLE_STOCKAGE = "coach-claude-leopold:progression";
+const ECRANS = ["accueil", "matieres", "exercice", "resultats"];
 
 let etat = {
-  mode: null, // "revision" | "evaluation"
   matiereCode: null,
   session: [],
   index: 0,
   reponseActuelle: null,
   aRepondu: false,
-  resultatsSession: [],
-  xpSession: 0,
+  resultatsSession: [], // [{ exercice, reponseDonnee, correct }]
 };
 
 /* ------------------------------- Utilitaires ------------------------------- */
@@ -63,74 +58,6 @@ function estReponseCorrecte(exercice, reponseDonnee) {
   }
 }
 
-/* ------------------------------- Progression ------------------------------- */
-
-function progressionParDefaut() {
-  return { xpTotal: 0, matieres: {}, derniereVisite: null, serie: 0 };
-}
-
-function chargerProgression() {
-  try {
-    const brut = localStorage.getItem(CLE_STOCKAGE);
-    if (!brut) return progressionParDefaut();
-    const donnees = JSON.parse(brut);
-    return { ...progressionParDefaut(), ...donnees, matieres: donnees.matieres || {} };
-  } catch (erreur) {
-    return progressionParDefaut();
-  }
-}
-
-function sauvegarderProgression(progression) {
-  try {
-    localStorage.setItem(CLE_STOCKAGE, JSON.stringify(progression));
-  } catch (erreur) {
-    // Stockage indisponible (navigation privée, quota...) : tant pis, on continue sans persister.
-  }
-}
-
-function mettreAJourSerie(progression) {
-  const aujourdHui = new Date().toISOString().slice(0, 10);
-  if (progression.derniereVisite === aujourdHui) return progression;
-  const hier = new Date(Date.now() - 86_400_000).toISOString().slice(0, 10);
-  progression.serie = progression.derniereVisite === hier ? progression.serie + 1 : 1;
-  progression.derniereVisite = aujourdHui;
-  sauvegarderProgression(progression);
-  return progression;
-}
-
-const PALIERS_NIVEAU = [
-  { seuil: 1, titre: "Apprenti Réviseur" },
-  { seuil: 3, titre: "Chercheur de Savoir" },
-  { seuil: 5, titre: "Stratège des Révisions" },
-  { seuil: 8, titre: "Maître Réviseur" },
-  { seuil: 12, titre: "Expert Suprême" },
-  { seuil: 18, titre: "Légende du Collège" },
-];
-
-function calculerNiveau(xpTotal) {
-  return Math.floor(xpTotal / 100) + 1;
-}
-
-function titreNiveau(niveau) {
-  let titre = PALIERS_NIVEAU[0].titre;
-  for (const palier of PALIERS_NIVEAU) {
-    if (niveau >= palier.seuil) titre = palier.titre;
-  }
-  return titre;
-}
-
-function majEnTeteStats(progression) {
-  const zone = document.getElementById("entete-stats");
-  if (!progression || progression.xpTotal <= 0) {
-    zone.hidden = true;
-    return;
-  }
-  const niveau = calculerNiveau(progression.xpTotal);
-  document.getElementById("pastille-niveau").textContent = `Niveau ${niveau}`;
-  document.getElementById("pastille-xp").textContent = `${progression.xpTotal} XP`;
-  zone.hidden = false;
-}
-
 /* ------------------------------- Navigation ------------------------------- */
 
 function afficherEcran(nom) {
@@ -143,11 +70,7 @@ function afficherEcran(nom) {
 
 /* ------------------------------- Écran matières ------------------------------- */
 
-function allerVersMatieres(mode) {
-  etat.mode = mode;
-  document.getElementById("titre-matieres").textContent =
-    mode === "evaluation" ? "Choisis une matière pour l'évaluation" : "Choisis une matière à réviser";
-
+function allerVersMatieres() {
   const grille = document.getElementById("grille-matieres");
   grille.innerHTML = "";
 
@@ -174,7 +97,7 @@ function allerVersMatieres(mode) {
     meta.textContent = `${nb} exercice${nb > 1 ? "s" : ""}`;
 
     carte.append(emoji, nomEl, meta);
-    carte.addEventListener("click", () => demarrerSession(mode, matiere.code));
+    carte.addEventListener("click", () => demarrerSession(matiere.code));
     grille.appendChild(carte);
   });
 
@@ -183,31 +106,18 @@ function allerVersMatieres(mode) {
 
 /* ------------------------------- Session d'exercices ------------------------------- */
 
-function demarrerSession(mode, matiereCode) {
-  etat.mode = mode;
+function demarrerSession(matiereCode) {
   etat.matiereCode = matiereCode;
   etat.session = melanger(getExercicesParMatiere(matiereCode));
   etat.index = 0;
   etat.resultatsSession = [];
-  etat.xpSession = 0;
-
-  const badgeMode = document.getElementById("badge-mode");
-  if (mode === "evaluation") {
-    badgeMode.textContent = "📝 Évaluation";
-    badgeMode.style.background = "var(--rose-clair)";
-    badgeMode.style.color = "var(--rose)";
-  } else {
-    badgeMode.textContent = "📘 Révision";
-    badgeMode.style.background = "var(--violet-clair)";
-    badgeMode.style.color = "var(--violet)";
-  }
 
   afficherEcran("exercice");
   afficherQuestion();
 }
 
 function rejouer() {
-  demarrerSession(etat.mode, etat.matiereCode);
+  demarrerSession(etat.matiereCode);
 }
 
 function majEnTeteExercice() {
@@ -276,7 +186,7 @@ function afficherQuestion() {
   document.getElementById("btn-valider").hidden = false;
   document.getElementById("btn-valider").disabled = true;
   document.getElementById("btn-suivant").classList.add("hidden");
-  document.getElementById("btn-indice").hidden = !(exercice.indice && etat.mode === "revision");
+  document.getElementById("btn-indice").hidden = !exercice.indice;
 
   majEnTeteExercice();
 }
@@ -303,7 +213,6 @@ function valider() {
   const correct = estReponseCorrecte(exercice, etat.reponseActuelle);
   etat.aRepondu = true;
   etat.resultatsSession.push({ exercice, reponseDonnee: etat.reponseActuelle, correct });
-  if (correct) etat.xpSession += etat.mode === "evaluation" ? 15 : 10;
 
   document.querySelectorAll("#zone-reponse .option-reponse").forEach((b) => (b.disabled = true));
   const champTexte = document.querySelector("#zone-reponse .champ-texte");
@@ -314,32 +223,28 @@ function valider() {
   document.getElementById("btn-valider").hidden = true;
   document.getElementById("btn-suivant").classList.remove("hidden");
 
-  if (etat.mode === "revision") {
-    if (exercice.type === "qcm") {
-      document.querySelectorAll("#zone-reponse .option-reponse").forEach((b, i) => {
-        if (i === exercice.bonne) b.classList.add("bonne-reponse");
-        else if (String(i) === etat.reponseActuelle) b.classList.add("mauvaise-reponse");
-      });
-    } else if (exercice.type === "vrai_faux") {
-      const valeurCorrecte = exercice.reponse ? "vrai" : "faux";
-      document.querySelectorAll("#zone-reponse .option-reponse").forEach((b) => {
-        const valeur = b.textContent.toLowerCase();
-        if (valeur === valeurCorrecte) b.classList.add("bonne-reponse");
-        else if (valeur === etat.reponseActuelle) b.classList.add("mauvaise-reponse");
-      });
-    }
-
-    const carte = document.getElementById("carte-correction");
-    carte.classList.remove("hidden", "correcte", "incorrecte");
-    carte.classList.add(correct ? "correcte" : "incorrecte");
-    document.getElementById("correction-verdict").textContent = correct ? "✅ Bonne réponse !" : "✏️ Pas tout à fait…";
-    document.getElementById("correction-explication").textContent = exercice.explication;
-
-    if (correct) mascotteReagitBonneReponse(exercice.matiere, exercice.difficulte);
-    else mascotteReagitMauvaiseReponse(exercice.matiere);
-  } else {
-    mascotteAccuseReceptionEvaluation();
+  if (exercice.type === "qcm") {
+    document.querySelectorAll("#zone-reponse .option-reponse").forEach((b, i) => {
+      if (i === exercice.bonne) b.classList.add("bonne-reponse");
+      else if (String(i) === etat.reponseActuelle) b.classList.add("mauvaise-reponse");
+    });
+  } else if (exercice.type === "vrai_faux") {
+    const valeurCorrecte = exercice.reponse ? "vrai" : "faux";
+    document.querySelectorAll("#zone-reponse .option-reponse").forEach((b) => {
+      const valeur = b.textContent.toLowerCase();
+      if (valeur === valeurCorrecte) b.classList.add("bonne-reponse");
+      else if (valeur === etat.reponseActuelle) b.classList.add("mauvaise-reponse");
+    });
   }
+
+  const carte = document.getElementById("carte-correction");
+  carte.classList.remove("hidden", "correcte", "incorrecte");
+  carte.classList.add(correct ? "correcte" : "incorrecte");
+  document.getElementById("correction-verdict").textContent = correct ? "✅ Bonne réponse !" : "✏️ Pas tout à fait…";
+  document.getElementById("correction-explication").textContent = exercice.explication;
+
+  if (correct) mascotteReagitBonneReponse(exercice.matiere, exercice.difficulte);
+  else mascotteReagitMauvaiseReponse(exercice.matiere);
 }
 
 function suivant() {
@@ -356,50 +261,25 @@ function finDeSession() {
   const score = etat.resultatsSession.filter((r) => r.correct).length;
   const pourcentage = Math.round((score / total) * 100);
 
-  const progression = chargerProgression();
-  progression.xpTotal += etat.xpSession;
-
-  if (!progression.matieres[etat.matiereCode]) {
-    progression.matieres[etat.matiereCode] = {
-      meilleureEvaluation: 0,
-      sessionsRevision: 0,
-      sessionsEvaluation: 0,
-    };
-  }
-  const statsMatiere = progression.matieres[etat.matiereCode];
-  if (etat.mode === "evaluation") {
-    statsMatiere.meilleureEvaluation = Math.max(statsMatiere.meilleureEvaluation, pourcentage);
-    statsMatiere.sessionsEvaluation = (statsMatiere.sessionsEvaluation || 0) + 1;
-  } else {
-    statsMatiere.sessionsRevision = (statsMatiere.sessionsRevision || 0) + 1;
-  }
-
-  sauvegarderProgression(progression);
-  majEnTeteStats(progression);
-
   document.getElementById("resultat-emoji").textContent = pourcentage >= 80 ? "🏆" : pourcentage >= 50 ? "👍" : "💪";
-  document.getElementById("resultat-titre").textContent =
-    etat.mode === "evaluation" ? "Évaluation terminée !" : "Séance terminée !";
+  document.getElementById("resultat-titre").textContent = "Séance terminée !";
   document.getElementById("resultat-score").textContent =
     `${score} bonne${score > 1 ? "s" : ""} réponse${score > 1 ? "s" : ""} sur ${total} (${pourcentage} %)`;
 
-  let texteXp = `+${etat.xpSession} XP gagnés`;
-  if (etat.mode === "evaluation") {
-    const note = Math.round(((score / total) * 20) * 2) / 2;
-    texteXp += ` · Note : ${note}/20`;
-  }
-  document.getElementById("resultat-xp").textContent = texteXp;
-
-  const recap = document.getElementById("recap-evaluation");
+  const recap = document.getElementById("recap-session");
   recap.innerHTML = "";
-  if (etat.mode === "evaluation") {
-    recap.classList.remove("hidden");
-    etat.resultatsSession.forEach((r) => {
+  const rates = etat.resultatsSession.filter((r) => !r.correct);
+  if (rates.length > 0) {
+    const intro = document.createElement("p");
+    intro.className = "recap-intro";
+    intro.textContent = "Points à revoir :";
+    recap.appendChild(intro);
+    rates.forEach((r) => {
       const item = document.createElement("div");
-      item.className = "recap-item " + (r.correct ? "correcte" : "incorrecte");
+      item.className = "recap-item incorrecte";
       const q = document.createElement("p");
       q.className = "recap-question";
-      q.textContent = (r.correct ? "✅ " : "✏️ ") + r.exercice.question;
+      q.textContent = "✏️ " + r.exercice.question;
       const e = document.createElement("p");
       e.className = "recap-explication";
       e.textContent = r.exercice.explication;
@@ -407,64 +287,97 @@ function finDeSession() {
       recap.appendChild(item);
     });
   } else {
-    recap.classList.add("hidden");
+    const bravo = document.createElement("p");
+    bravo.className = "recap-intro";
+    bravo.textContent = "🎉 Toutes les réponses étaient bonnes !";
+    recap.appendChild(bravo);
   }
 
   mascotteDit(phraseFinDeSession(pourcentage));
   if (pourcentage >= 80) lancerConfettis();
 
+  document.getElementById("note-email").hidden = true;
+  preremplirChampEmail();
   afficherEcran("resultats");
 }
 
-/* ------------------------------- Écran progrès ------------------------------- */
+/* ------------------------------- Résumé par email ------------------------------- */
 
-function afficherEcranProgres() {
-  const progression = chargerProgression();
-  const niveau = calculerNiveau(progression.xpTotal);
+const CLE_EMAIL_PARENT = "coach-claude-leopold:email-parent";
 
-  document.getElementById("progres-titre-niveau").textContent = `Niveau ${niveau} · ${titreNiveau(niveau)}`;
-  const xpDansNiveau = progression.xpTotal % 100;
-  document.getElementById("progres-barre-xp").style.width = xpDansNiveau + "%";
-  document.getElementById("progres-detail-xp").textContent =
-    `${progression.xpTotal} XP au total · encore ${100 - xpDansNiveau} XP avant le niveau ${niveau + 1}`;
+function formaterDateHeure() {
+  const maintenant = new Date();
+  const date = maintenant.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+  const heure = maintenant.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+  return `${date} à ${heure}`;
+}
 
-  const carteSerie = document.getElementById("carte-serie");
-  carteSerie.textContent =
-    progression.serie >= 2
-      ? `🔥 ${progression.serie} jours de suite, ${PRENOM} est en feu !`
-      : "✨ Reviens demain pour démarrer une série de jours !";
+/** Pré-remplit le champ email avec la dernière adresse utilisée sur ce navigateur (s'il y en a une). */
+function preremplirChampEmail() {
+  const champ = document.getElementById("champ-email-parent");
+  let connue = null;
+  try {
+    connue = localStorage.getItem(CLE_EMAIL_PARENT);
+  } catch (erreur) {
+    // ignore
+  }
+  if (connue) champ.value = connue;
+}
 
-  const liste = document.getElementById("liste-matieres-progres");
-  liste.innerHTML = "";
-  MATIERES.forEach((matiere) => {
-    const stats = progression.matieres[matiere.code];
-    const meilleure = stats ? stats.meilleureEvaluation : 0;
-    const etoiles = meilleure >= 90 ? 3 : meilleure >= 70 ? 2 : meilleure >= 40 ? 1 : 0;
+function afficherNoteEmail(texte) {
+  const note = document.getElementById("note-email");
+  note.textContent = texte;
+  note.hidden = false;
+}
 
-    const ligne = document.createElement("div");
-    ligne.className = "ligne-matiere-progres";
+function envoyerResumeParEmail() {
+  const champ = document.getElementById("champ-email-parent");
+  const destinataire = champ.value.trim();
+  if (destinataire === "" || !destinataire.includes("@")) {
+    afficherNoteEmail("⚠️ Entre une adresse email valide avant d'envoyer.");
+    champ.focus();
+    return;
+  }
+  document.getElementById("note-email").hidden = true;
+  try {
+    localStorage.setItem(CLE_EMAIL_PARENT, destinataire);
+  } catch (erreur) {
+    // Stockage indisponible (navigation privée...) : tant pis, le champ sera vide la prochaine fois.
+  }
 
-    const tete = document.createElement("div");
-    tete.className = "ligne-matiere-progres-tete";
-    const nomSpan = document.createElement("span");
-    nomSpan.textContent = `${matiere.emoji} ${matiere.nom}`;
-    const etoilesSpan = document.createElement("span");
-    etoilesSpan.className = "etoiles";
-    etoilesSpan.textContent = "★".repeat(etoiles) + "☆".repeat(3 - etoiles);
-    tete.append(nomSpan, etoilesSpan);
+  const matiere = getMatiere(etat.matiereCode);
+  const total = etat.resultatsSession.length;
+  const score = etat.resultatsSession.filter((r) => r.correct).length;
+  const pourcentage = Math.round((score / total) * 100);
+  const chapitres = [...new Set(etat.resultatsSession.map((r) => r.exercice.chapitre))];
+  const rates = etat.resultatsSession.filter((r) => !r.correct);
 
-    const detail = document.createElement("p");
-    detail.className = "niveau-detail";
-    detail.textContent =
-      stats && stats.sessionsEvaluation
-        ? `Meilleure évaluation : ${meilleure} %`
-        : "Pas encore d'évaluation passée dans cette matière.";
+  let corps = `Bonjour,\n\n${PRENOM} vient de terminer une session de révision.\n\n`;
+  corps += `Matière : ${matiere.emoji} ${matiere.nom}\n`;
+  corps += `Chapitre(s) : ${chapitres.join(", ")}\n`;
+  corps += `Résultat : ${score}/${total} bonnes réponses (${pourcentage} %)\n`;
+  corps += `${formaterDateHeure()}\n`;
 
-    ligne.append(tete, detail);
-    liste.appendChild(ligne);
-  });
+  if (rates.length > 0) {
+    corps += `\nPoints à retravailler ensemble :\n`;
+    rates.slice(0, 6).forEach((r) => {
+      const enonce = r.exercice.question.length > 100 ? r.exercice.question.slice(0, 100) + "…" : r.exercice.question;
+      corps += `- ${enonce}\n`;
+    });
+    if (rates.length > 6) corps += `- … et ${rates.length - 6} autre(s).\n`;
+  } else {
+    corps += `\nToutes les réponses étaient correctes, bravo !\n`;
+  }
 
-  afficherEcran("progres");
+  corps += `\nGénéré automatiquement par l'appli de révision de ${PRENOM}.`;
+
+  const sujet = `Résumé de révision de ${PRENOM} – ${matiere.nom}`;
+  const url =
+    `https://mail.google.com/mail/?view=cm&fs=1` +
+    `&to=${encodeURIComponent(destinataire)}` +
+    `&su=${encodeURIComponent(sujet)}` +
+    `&body=${encodeURIComponent(corps)}`;
+  window.open(url, "_blank", "noopener");
 }
 
 /* ------------------------------- Initialisation ------------------------------- */
@@ -474,22 +387,17 @@ function initEvenements() {
   document.querySelectorAll('[data-retour="accueil"]').forEach((b) =>
     b.addEventListener("click", () => afficherEcran("accueil"))
   );
-  document.querySelectorAll(".carte-action[data-mode]").forEach((b) =>
-    b.addEventListener("click", () => allerVersMatieres(b.dataset.mode))
-  );
-  document.getElementById("btn-voir-progres").addEventListener("click", afficherEcranProgres);
+  document.getElementById("btn-reviser").addEventListener("click", allerVersMatieres);
   document.getElementById("btn-indice").addEventListener("click", afficherIndice);
   document.getElementById("btn-valider").addEventListener("click", valider);
   document.getElementById("btn-suivant").addEventListener("click", suivant);
   document.getElementById("btn-rejouer").addEventListener("click", rejouer);
+  document.getElementById("btn-envoyer-email").addEventListener("click", envoyerResumeParEmail);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   initMascotte();
   initEvenements();
-  let progression = chargerProgression();
-  progression = mettreAJourSerie(progression);
-  majEnTeteStats(progression);
   mascotteAccueille();
   afficherEcran("accueil");
 });
