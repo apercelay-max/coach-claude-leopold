@@ -18,8 +18,11 @@ const PRENOM = "Léopold";
 // Une matière = { code, nom, emoji, couleur (voir COULEURS_MATIERE dans app.js) }
 const MATIERES = [
   { code: "maths", nom: "Mathématiques", emoji: "➗", couleur: "bleu" },
-  { code: "espagnol", nom: "Espagnol", emoji: "🇪🇸", couleur: "violet" },
+  { code: "francais", nom: "Français", emoji: "📖", couleur: "rose" },
+  { code: "histoire_geo", nom: "Histoire-Géographie", emoji: "🌍", couleur: "ambre" },
+  { code: "sciences", nom: "Sciences", emoji: "🔬", couleur: "emeraude" },
   { code: "anglais", nom: "Anglais", emoji: "🇬🇧", couleur: "indigo" },
+  { code: "espagnol", nom: "Espagnol", emoji: "🇪🇸", couleur: "violet" },
 ];
 
 /**
@@ -315,6 +318,139 @@ const EXERCICES = [
     choix: ["La classe (le groupe d'élèves)", "Un cours de sport", "Une salle de classe vide", "Un devoir noté"], bonne: 0,
     indice: "Pense à une photo de groupe prise devant l'école.",
     explication: "« Class photos » = les photos de classe : toute la classe posant ensemble pour une photo souvenir.",
+  },
+
+  // ============================ FRANÇAIS ============================
+  // Contenu de démonstration niveau 5ème (restauré à la demande de Léopold).
+  {
+    id: "francais-1", matiere: "francais", chapitre: "Nature des mots", difficulte: 1,
+    type: "qcm", question: "Dans « Le petit chat dort. », quelle est la nature du mot « petit » ?",
+    choix: ["Un adjectif qualificatif", "Un verbe", "Un adverbe", "Un nom"], bonne: 0,
+    indice: "Ce mot donne une information sur le chat.",
+    explication: "« Petit » qualifie le nom « chat » : c'est un adjectif qualificatif.",
+  },
+  {
+    id: "francais-2", matiere: "francais", chapitre: "Compléments du verbe", difficulte: 2,
+    type: "qcm", question: "Dans « Léopold mange une pomme. », quel est le COD ?",
+    choix: ["Léopold", "mange", "une pomme", "il n'y en a pas"], bonne: 2,
+    indice: "Le COD répond à la question « quoi ? » juste après le verbe.",
+    explication: "« Une pomme » répond à « mange quoi ? » : c'est le complément d'objet direct.",
+  },
+  {
+    id: "francais-3", matiere: "francais", chapitre: "Conjugaison", difficulte: 2,
+    type: "qcm", question: "Conjugue « chanter » au passé simple, 3e personne du singulier.",
+    choix: ["il chanta", "il chantait", "il a chanté", "il chante"], bonne: 0,
+    indice: "Les verbes du 1er groupe prennent -a au passé simple à la 3e personne du singulier.",
+    explication: "Au passé simple, « chanter » devient « il chanta ».",
+  },
+  {
+    id: "francais-4", matiere: "francais", chapitre: "Conjugaison", difficulte: 2,
+    type: "vrai_faux", question: "Le futur simple du verbe « voir » à la 1ère personne du singulier est « je verrai ».",
+    reponse: true,
+    indice: "« Voir » est un verbe irrégulier au futur.",
+    explication: "Vrai : je verrai, tu verras, il verra… (à retenir par cœur, c'est irrégulier).",
+  },
+  {
+    id: "francais-5", matiere: "francais", chapitre: "Orthographe", difficulte: 1,
+    type: "qcm", question: "Quel est le pluriel de « cheval » ?",
+    choix: ["chevals", "chevaux", "chevales", "chevaus"], bonne: 1,
+    indice: "Les mots en -al font souvent leur pluriel en -aux.",
+    explication: "Les mots en -al font leur pluriel en -aux : un cheval → des chevaux.",
+  },
+  {
+    id: "francais-6", matiere: "francais", chapitre: "Vocabulaire", difficulte: 1,
+    type: "reponse_courte", question: "Donne un synonyme du mot « content » (un seul mot).",
+    reponses: ["heureux", "joyeux", "ravi", "satisfait"],
+    indice: "Pense à un mot qui veut dire à peu près la même chose.",
+    explication: "« Heureux », « joyeux » ou « ravi » sont de bons synonymes de « content ».",
+  },
+
+  // ============================ HISTOIRE-GÉOGRAPHIE ============================
+  {
+    id: "histgeo-1", matiere: "histoire_geo", chapitre: "Moyen Âge", difficulte: 2,
+    type: "qcm", question: "À quelle époque appartient Charlemagne ?",
+    choix: ["l'Antiquité", "le Moyen Âge", "la Renaissance", "l'époque contemporaine"], bonne: 1,
+    indice: "Il a été sacré empereur en l'an 800.",
+    explication: "Charlemagne (VIIIe-IXe siècle) est une figure majeure du Moyen Âge.",
+  },
+  {
+    id: "histgeo-2", matiere: "histoire_geo", chapitre: "Moyen Âge", difficulte: 1,
+    type: "vrai_faux", question: "Le Moyen Âge se situe entre l'Antiquité et les Temps modernes.",
+    reponse: true,
+    indice: "Situe-le entre la chute de Rome et la Renaissance.",
+    explication: "Le Moyen Âge s'étend environ du Ve au XVe siècle, entre l'Antiquité et la Renaissance.",
+  },
+  {
+    id: "histgeo-3", matiere: "histoire_geo", chapitre: "Naissance de l'Islam", difficulte: 2,
+    type: "qcm", question: "Au VIIe siècle, dans quelle région naît l'Islam ?",
+    choix: ["La péninsule arabique", "L'Égypte", "La Grèce", "L'Espagne"], bonne: 0,
+    indice: "C'est la région où se trouvent La Mecque et Médine.",
+    explication: "L'Islam naît au VIIe siècle dans la péninsule arabique.",
+  },
+  {
+    id: "histgeo-4", matiere: "histoire_geo", chapitre: "Naissance de l'Islam", difficulte: 1,
+    type: "qcm", question: "Comment appelle-t-on le texte sacré de l'Islam ?",
+    choix: ["Le Coran", "La Bible", "La Torah", "Les Évangiles"], bonne: 0,
+    indice: "C'est un mot arabe qui signifie « récitation ».",
+    explication: "Le Coran est le texte sacré de l'Islam.",
+  },
+  {
+    id: "histgeo-5", matiere: "histoire_geo", chapitre: "Ressources en eau", difficulte: 2,
+    type: "qcm", question: "Quelle proportion de l'eau sur Terre est de l'eau douce facilement accessible ?",
+    choix: ["Moins de 1 %", "50 %", "25 %", "10 %"], bonne: 0,
+    indice: "La plupart de l'eau douce est gelée aux pôles ou souterraine.",
+    explication: "Moins de 1 % de l'eau sur Terre est de l'eau douce facilement accessible pour l'être humain.",
+  },
+  {
+    id: "histgeo-6", matiere: "histoire_geo", chapitre: "Ressources en eau", difficulte: 2,
+    type: "qcm", question: "Quel secteur consomme le plus d'eau douce dans le monde ?",
+    choix: ["L'agriculture", "L'industrie", "Les foyers (usage domestique)", "Le tourisme"], bonne: 0,
+    indice: "Pense à l'irrigation des champs.",
+    explication: "L'agriculture (irrigation) est le secteur qui consomme le plus d'eau douce dans le monde.",
+  },
+
+  // ============================ SCIENCES ============================
+  {
+    id: "sciences-1", matiere: "sciences", chapitre: "Digestion", difficulte: 2,
+    type: "qcm", question: "Quel organe produit la bile, qui aide à digérer les graisses ?",
+    choix: ["l'estomac", "le foie", "les poumons", "les reins"], bonne: 1,
+    indice: "C'est aussi l'organe qui filtre le sang.",
+    explication: "Le foie produit la bile, qui aide à digérer les graisses dans l'intestin.",
+  },
+  {
+    id: "sciences-2", matiere: "sciences", chapitre: "Digestion", difficulte: 1,
+    type: "vrai_faux", question: "Les aliments sont transformés en nutriments au cours de la digestion.",
+    reponse: true,
+    indice: "Pense à ce que le corps doit faire pour utiliser ce qu'on mange.",
+    explication: "La digestion transforme les aliments en nutriments, assez petits pour passer dans le sang.",
+  },
+  {
+    id: "sciences-3", matiere: "sciences", chapitre: "États de la matière", difficulte: 1,
+    type: "qcm", question: "Comment s'appelle le passage de l'état liquide à l'état gazeux ?",
+    choix: ["l'évaporation", "la fusion", "la solidification", "la condensation"], bonne: 0,
+    indice: "Pense à une flaque d'eau qui disparaît au soleil.",
+    explication: "L'évaporation est le passage de l'état liquide à l'état gazeux.",
+  },
+  {
+    id: "sciences-4", matiere: "sciences", chapitre: "Géologie", difficulte: 2,
+    type: "vrai_faux", question: "Une roche sédimentaire se forme par accumulation de sédiments.",
+    reponse: true,
+    indice: "« Sédimentaire » vient du mot « sédiment ».",
+    explication: "Vrai : les roches sédimentaires se forment par accumulation et compactage de sédiments au fil du temps.",
+  },
+  {
+    id: "sciences-5", matiere: "sciences", chapitre: "Respiration", difficulte: 1,
+    type: "reponse_courte", question: "Quel organe permet la respiration chez l'être humain ? (un mot)",
+    reponses: ["poumons", "les poumons"],
+    indice: "Il y en a deux, dans la cage thoracique.",
+    explication: "Ce sont les poumons qui permettent les échanges gazeux lors de la respiration.",
+  },
+  {
+    id: "sciences-6", matiere: "sciences", chapitre: "Le vivant", difficulte: 1,
+    type: "vrai_faux", question: "Tous les êtres vivants ont besoin d'eau pour survivre.",
+    reponse: true,
+    indice: "Pense à la composition des cellules vivantes.",
+    explication: "L'eau est indispensable à la vie : elle compose une grande partie des cellules vivantes.",
   },
 ];
 

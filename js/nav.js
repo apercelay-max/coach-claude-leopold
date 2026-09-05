@@ -77,7 +77,7 @@
     capsule.appendChild(noise);
 
     const onglets = matieres
-      .map((m) => ({ cle: m.code, label: raccourci(m.nom), emoji: ICONES_MATIERE[m.code] || m.emoji }))
+      .map((m) => ({ cle: m.code, label: raccourci(m.nom, m.code), emoji: ICONES_MATIERE[m.code] || m.emoji }))
       .concat([
         { cle: "stats", label: "Stats", emoji: "📊" },
         { cle: "reglages", label: "Réglages", emoji: "⚙️" },
@@ -126,7 +126,17 @@
     document.body.appendChild(wrap);
   }
 
-  function raccourci(nom) {
+  // Libellés courts pour la barre (place limitée sous l'icône).
+  const LIBELLE_COURT = {
+    maths: "Maths",
+    francais: "Français",
+    histoire_geo: "Histoire",
+    sciences: "Sciences",
+    anglais: "Anglais",
+    espagnol: "Espagnol",
+  };
+  function raccourci(nom, code) {
+    if (code && LIBELLE_COURT[code]) return LIBELLE_COURT[code];
     if (/math/i.test(nom)) return "Maths";
     return nom.length > 9 ? nom.slice(0, 8) + "…" : nom;
   }
