@@ -18,6 +18,7 @@
   const CLE = "coach-claude-leopold:reglages-v1";
 
   const DEFAUTS = {
+    defilement: "on",       // on = toute la séance sur un écran qui défile ; off = une question à la fois
     theme: "systeme",       // systeme | clair | sombre
     accent: "corail",       // corail | bleu | vert | violet | rose | ambre | perso
     accentPerso: "#D97757",
@@ -235,6 +236,17 @@
   function rendreEcran(conteneur) {
     conteneur.innerHTML = "";
     const rerender = () => rendreEcran(conteneur);
+
+    // ----- Révision -----
+    const gRev = groupe("Révision");
+    gRev.appendChild(
+      ligneToggle(
+        "Tout sur un écran qui défile",
+        "Affiche tous les exercices d'une séance sur une seule page qui défile — pas besoin de cliquer « Suivant » à chaque question. Prend effet à la prochaine séance.",
+        "defilement"
+      )
+    );
+    conteneur.appendChild(gRev);
 
     // ----- Apparence -----
     const gApp = groupe("Apparence");

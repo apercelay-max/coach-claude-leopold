@@ -84,16 +84,23 @@
   <!-- ===================== EXERCICE ===================== -->
   <section class="ecran hidden" id="ecran-exercice">
     <div class="conteneur conteneur-etroit">
-      <div class="barre-entete-exercice">
-        <button type="button" class="lien-retour" data-retour="accueil">← Quitter</button>
-        <span class="compteur-question" id="compteur-question"></span>
+      <div class="exercice-sticky">
+        <div class="barre-entete-exercice">
+          <button type="button" class="lien-retour" data-retour="accueil">← Quitter</button>
+          <span class="compteur-question" id="compteur-question"></span>
+        </div>
+        <div class="barre-progression">
+          <div class="barre-progression-remplissage" id="barre-progression-remplissage"></div>
+        </div>
       </div>
 
-      <div class="barre-progression">
-        <div class="barre-progression-remplissage" id="barre-progression-remplissage"></div>
-      </div>
+      <!-- Mode « tout sur un écran qui défile » (par défaut) : rempli par js/session.js -->
+      <div id="exercice-liste"></div>
 
-      <div class="carte-question" id="carte-question">
+      <!-- Mode « une question à la fois » (réglage : défilement désactivé) —
+           gardé caché sinon, mais nécessaire : js/app.js branche des écouteurs
+           sur #btn-valider / #btn-suivant / #btn-indice au chargement. -->
+      <div class="carte-question" id="carte-question" hidden>
         <span class="badge-matiere" id="badge-matiere-question"></span>
         <p class="enonce" id="enonce-question"></p>
         <div class="zone-reponse" id="zone-reponse"><!-- rempli en JS selon le type --></div>
@@ -207,5 +214,6 @@
 <script src="js/reglages.js"></script>
 <script src="js/parents.js"></script>
 <script src="js/nav.js"></script>
+<script src="js/session.js"></script>
 </body>
 </html>
