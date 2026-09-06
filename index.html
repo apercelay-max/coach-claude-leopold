@@ -196,6 +196,17 @@
 
 <div class="confettis" id="confettis" aria-hidden="true"></div>
 
+<!-- Config de la synchro multi-appareils (voir js/sync.js). Le projet Supabase
+     est le même que cap-sur-la-5e / bia-2027. La clé "publishable" est faite
+     pour être exposée dans le navigateur (elle ne donne accès qu'à la table
+     de cette appli, protégée par RLS). Tant qu'elle est vide, la synchro est
+     simplement masquée et le reste de l'appli fonctionne normalement. -->
+<script>
+window.COACH_SUPABASE = {
+  url: "https://elyspjsyconovzczmzhm.supabase.co",
+  key: "" /* sb_publishable_… — à remplir une fois la table créée */
+};
+</script>
 <script src="js/data.js"></script>
 <script src="js/mascotte.js"></script>
 <script src="js/app.js"></script>
@@ -203,5 +214,6 @@
 <script src="js/reglages.js"></script>
 <script src="js/nav.js"></script>
 <script src="js/session.js"></script>
+<script src="js/sync.js"></script>
 </body>
 </html>
