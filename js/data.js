@@ -11,6 +11,11 @@
    arrive (nouvelle matière ou nouveau chapitre), il suffit d'ajouter des
    objets à EXERCICES (et une ligne à MATIERES si besoin). Rien d'autre à
    toucher.
+
+   Français / Histoire-Géo / Sciences retirés (encore une fois) : aucun
+   document de Léopold ne les couvre pour l'instant. Cf. la conversation du
+   6 septembre 2026 — à réintroduire seulement quand un vrai cours/devoir
+   arrive dans le dossier.
    ========================================================================= */
 
 const PRENOM = "Léopold";
@@ -18,11 +23,8 @@ const PRENOM = "Léopold";
 // Une matière = { code, nom, emoji, couleur (voir COULEURS_MATIERE dans app.js) }
 const MATIERES = [
   { code: "maths", nom: "Mathématiques", emoji: "➗", couleur: "bleu" },
-  { code: "francais", nom: "Français", emoji: "📖", couleur: "rose" },
-  { code: "histoire_geo", nom: "Histoire-Géographie", emoji: "🌍", couleur: "ambre" },
-  { code: "sciences", nom: "Sciences", emoji: "🔬", couleur: "emeraude" },
-  { code: "anglais", nom: "Anglais", emoji: "🇬🇧", couleur: "indigo" },
   { code: "espagnol", nom: "Espagnol", emoji: "🇪🇸", couleur: "violet" },
+  { code: "anglais", nom: "Anglais", emoji: "🇬🇧", couleur: "indigo" },
 ];
 
 /**
@@ -189,7 +191,10 @@ const EXERCICES = [
   },
 
   // ============================ ESPAGNOL ============================
-  // ---- Support « la vuelta al cole » ----
+  // Toutes les matières ci-dessous proviennent du classeur complet
+  // (39 pages) « A2-01 la vuelta al cole », désormais exploité en entier.
+
+  // ---- Vocabulario: la vuelta al cole ----
   {
     id: "espagnol-1", matiere: "espagnol", chapitre: "Vocabulario: la vuelta al cole", difficulte: 1,
     type: "qcm", question: "Que signifie « la vuelta » en français ?",
@@ -198,12 +203,37 @@ const EXERCICES = [
     explication: "« La vuelta » signifie « le retour » (ou « un tour ») : « la vuelta al cole » = la rentrée des classes.",
   },
   {
+    id: "espagnol-1b", matiere: "espagnol", chapitre: "Vocabulario: la vuelta al cole", difficulte: 1,
+    type: "reponse_courte", question: "« El cole » est le diminutif familier de quel mot ? (un mot)",
+    reponses: ["colegio", "el colegio"],
+    indice: "C'est le nom espagnol de l'école/collège.",
+    explication: "« El cole » est l'abréviation familière de « el colegio » (l'école).",
+  },
+
+  // ---- Verbos regulares en presente ----
+  {
     id: "espagnol-2", matiere: "espagnol", chapitre: "Verbos regulares en presente", difficulte: 1,
     type: "qcm", question: "Conjugue « comer » (manger) à la 2e personne du singulier : « tú ___ ».",
     choix: ["comes", "come", "coméis", "coman"], bonne: 0,
     indice: "Les verbes réguliers en -er prennent -es à la 2e personne du singulier.",
     explication: "« Tú comes » : les verbes en -ER prennent -o, -es, -e, -emos, -éis, -en au présent.",
   },
+  {
+    id: "espagnol-2b", matiere: "espagnol", chapitre: "Verbos regulares en presente", difficulte: 2,
+    type: "qcm", question: "Conjugue « hablar » (parler) à la personne « nosotros/as ».",
+    choix: ["hablamos", "habláis", "hablan", "hablo"], bonne: 0,
+    indice: "Les verbes en -AR prennent -amos à la 1ère personne du pluriel.",
+    explication: "« Nosotros/as hablamos » : les verbes en -AR se conjuguent -o, -as, -a, -amos, -áis, -an au présent.",
+  },
+  {
+    id: "espagnol-2c", matiere: "espagnol", chapitre: "Verbos regulares en presente", difficulte: 2,
+    type: "reponse_courte", question: "Complète (extrait du document) : « Voy al cole … hasta las dos y media, cuando vuelvo del colegio, ___. » (yo como, un mot)",
+    reponses: ["como"],
+    indice: "C'est le verbe « comer » à la 1ère personne du singulier.",
+    explication: "« Como » : yo como, tú comes, él/ella come, nosotros comemos, vosotros coméis, ellos comen.",
+  },
+
+  // ---- Verbos irregulares: IR ----
   {
     id: "espagnol-3", matiere: "espagnol", chapitre: "Verbos irregulares", difficulte: 2,
     type: "qcm", question: "Conjugue le verbe « IR » (aller) à la personne « vosotros ».",
@@ -212,12 +242,44 @@ const EXERCICES = [
     explication: "« Vosotros vais » : IR est un verbe très irrégulier à apprendre par cœur (voy, vas, va, vamos, vais, van).",
   },
   {
+    id: "espagnol-3b", matiere: "espagnol", chapitre: "Verbos irregulares", difficulte: 1,
+    type: "reponse_courte", question: "Conjugue « IR » à la 1ère personne du singulier : « yo ___ al instituto. » (un mot)",
+    reponses: ["voy"],
+    indice: "C'est irrégulier, ça ne suit pas le modèle habituel des verbes en -IR.",
+    explication: "« Yo voy » : le verbe IR est totalement irrégulier au présent (voy, vas, va, vamos, vais, van).",
+  },
+
+  // ---- Gramática: la rutina (soler) ----
+  {
     id: "espagnol-4", matiere: "espagnol", chapitre: "Gramática: la rutina", difficulte: 2,
     type: "qcm", question: "Que signifie « soler + infinitivo » (ex : « suelo desayunar a las siete ») ?",
     choix: ["avoir l'habitude de", "vouloir", "devoir", "pouvoir"], bonne: 0,
     indice: "C'est la structure utilisée pour parler de sa routine habituelle.",
     explication: "« Soler + infinitif » = avoir l'habitude de. « Suelo desayunar a las siete » = j'ai l'habitude de prendre le petit-déjeuner à sept heures.",
   },
+  {
+    id: "espagnol-4b", matiere: "espagnol", chapitre: "Gramática: la rutina", difficulte: 2,
+    type: "qcm", question: "Conjugue « SOLER » (verbe à diphtongue o → ue) à la personne « nosotros ».",
+    choix: ["solemos", "suelemos", "soléis", "sueles"], bonne: 0,
+    indice: "Les verbes à diphtongue perdent leur diphtongue à « nosotros » et « vosotros ».",
+    explication: "« Solemos » : SOLER = suelo, sueles, suele, SOLEMOS, soléis, suelen (la diphtongue -ue- disparaît à nosotros/vosotros).",
+  },
+  {
+    id: "espagnol-4c", matiere: "espagnol", chapitre: "La rutina de Rosalía", difficulte: 2,
+    type: "qcm", question: "D'après le document sur Rosalía, que fait-elle en premier le matin ?",
+    choix: ["Ses exercices de chant", "Elle se douche", "Elle prépare des brownies", "Elle joue au ballon"], bonne: 0,
+    indice: "« Lo primero que hace es hacer sus ejercicios de canto. »",
+    explication: "Le texte dit : « Cuando se despierta por la mañana lo primero que hace es hacer sus ejercicios de canto. »",
+  },
+  {
+    id: "espagnol-4d", matiere: "espagnol", chapitre: "La rutina de Rosalía", difficulte: 1,
+    type: "qcm", question: "Rosalía est présentée dans le document comme...",
+    choix: ["une jeune chanteuse, compositrice et productrice espagnole", "une actrice de cinéma américaine", "une joueuse de football", "une journaliste"], bonne: 0,
+    indice: "C'est écrit dans l'encart « ¿Lo sabes? ».",
+    explication: "« Rosalía es una joven cantante, compositora, actriz y productora española muy famosa. »",
+  },
+
+  // ---- Verbos reflexivos ----
   {
     id: "espagnol-5", matiere: "espagnol", chapitre: "Verbos reflexivos", difficulte: 2,
     type: "qcm", question: "Conjugue « despertarse » (se réveiller) à la 1ère personne du singulier.",
@@ -233,12 +295,58 @@ const EXERCICES = [
     explication: "« Te acuestas » : acostarse se conjugue avec la diphtongue o → ue (me acuesto, te acuestas, se acuesta…).",
   },
   {
+    id: "espagnol-6b", matiere: "espagnol", chapitre: "Verbos reflexivos", difficulte: 1,
+    type: "qcm", question: "Conjugue « ducharse » (se doucher) à la personne « nosotros ».",
+    choix: ["nos duchamos", "os ducháis", "se duchan", "me ducho"], bonne: 0,
+    indice: "Ducharse n'est pas un verbe à diphtongue : la base ne change pas.",
+    explication: "« Nos duchamos » : ME ducho, TE duchas, SE ducha, NOS duchamos, OS ducháis, SE duchan.",
+  },
+  {
+    id: "espagnol-6c", matiere: "espagnol", chapitre: "Verbos reflexivos", difficulte: 1,
+    type: "qcm", question: "Conjugue « levantarse » (se lever) à la 3e personne du pluriel.",
+    choix: ["se levantan", "se levanta", "os levantáis", "nos levantamos"], bonne: 0,
+    indice: "« Ellos/ellas » = la 3e personne du pluriel.",
+    explication: "« Se levantan » : ME levanto, TE levantas, SE levanta, NOS levantamos, OS levantáis, SE levantan.",
+  },
+  {
+    id: "espagnol-6d", matiere: "espagnol", chapitre: "Vocabulario: la rutina diaria", difficulte: 1,
+    type: "reponse_courte", question: "Comment dit-on « tôt » en espagnol, dans l'expression « pronto x tarde » ? (un mot)",
+    reponses: ["pronto"],
+    indice: "C'est le premier mot de l'expression « pronto x tarde = tôt x tard ».",
+    explication: "« Pronto » = tôt (par opposition à « tarde » = tard).",
+  },
+  {
+    id: "espagnol-6e", matiere: "espagnol", chapitre: "Vocabulario: la rutina diaria", difficulte: 1,
+    type: "qcm", question: "D'après le vocabulaire de la rutina, que signifie « costar (ue) » dans « me cuesta dormir »  ?",
+    choix: ["avoir du mal à", "coûter cher", "compter", "coudre"], bonne: 0,
+    indice: "Le document traduit « costar (ue) » par « avoir du mal de ».",
+    explication: "« Costar (ue) » ici = avoir du mal à (faire quelque chose). Ex : « me cuesta dormir » = j'ai du mal à dormir.",
+  },
+
+  // ---- La hora ----
+  {
     id: "espagnol-7", matiere: "espagnol", chapitre: "La hora", difficulte: 2,
     type: "qcm", question: "Comment dit-on « 13:30 » en espagnol ?",
     choix: ["Es la una y media (de la tarde)", "Son las trece y media", "Es la una menos media", "Son la una y media"], bonne: 0,
     indice: "1h de l'après-midi se dit « la una », pas « las trece ».",
     explication: "« Es la una y media (de la tarde) » : pour 1 heure on utilise « es la una », et « y media » pour la demie.",
   },
+  {
+    id: "espagnol-7b", matiere: "espagnol", chapitre: "La hora", difficulte: 2,
+    type: "qcm", question: "Comment dit-on « 21:45 » (9h45 du soir) en espagnol ?",
+    choix: ["Son las diez menos cuarto de la noche", "Son las nueve y cuarenta y cinco", "Es las diez menos cuarto", "Son las nueve menos cuarto"], bonne: 0,
+    indice: "Après la demie, on compte « menos » par rapport à l'heure suivante : 21:45 est proche de 22h.",
+    explication: "« Son las diez menos cuarto de la noche » : passé la demie, on annonce l'heure suivante « moins le quart ».",
+  },
+  {
+    id: "espagnol-7c", matiere: "espagnol", chapitre: "La hora", difficulte: 1,
+    type: "qcm", question: "Comment dit-on « 8h15 du matin » en espagnol ?",
+    choix: ["Son las ocho y cuarto de la mañana", "Son las ocho y quince minutos solamente", "Es las ocho y cuarto", "Son las ocho menos cuarto"], bonne: 0,
+    indice: "« Y cuarto » = et quart.",
+    explication: "« Son las ocho y cuarto de la mañana » = il est huit heures et quart du matin.",
+  },
+
+  // ---- Comparativos ----
   {
     id: "espagnol-8", matiere: "espagnol", chapitre: "Comparativos", difficulte: 2,
     type: "reponse_courte", question: "Complète : « Ramón es ___ clásico que Carlos. » (comparatif de supériorité, un mot)",
@@ -247,12 +355,81 @@ const EXERCICES = [
     explication: "« Ramón es más clásico que Carlos » : más... que = plus... que.",
   },
   {
+    id: "espagnol-8b", matiere: "espagnol", chapitre: "Comparativos", difficulte: 2,
+    type: "qcm", question: "Comment dit-on « Cristina est moins sérieuse qu'Ángeles » en espagnol ?",
+    choix: ["Cristina es menos seria que Ángeles", "Cristina es más seria que Ángeles", "Cristina es tan seria como Ángeles", "Cristina está menos seria que Ángeles"], bonne: 0,
+    indice: "Comparatif d'infériorité : menos... que.",
+    explication: "« Cristina es menos seria que Ángeles » : menos... que = moins... que.",
+  },
+  {
+    id: "espagnol-8c", matiere: "espagnol", chapitre: "Comparativos", difficulte: 2,
+    type: "qcm", question: "Comment dit-on « Fina est aussi souriante que Cristina » (comparatif d'égalité) ?",
+    choix: ["Fina es tan risueña como Cristina", "Fina es más risueña que Cristina", "Fina es menos risueña que Cristina", "Fina es tan risueña que Cristina"], bonne: 0,
+    indice: "Comparatif d'égalité : tan... como.",
+    explication: "« Fina es tan risueña como Cristina » : tan... como = aussi... que.",
+  },
+
+  // ---- Verbos a diptongo y debilitamiento ----
+  {
+    id: "espagnol-8d", matiere: "espagnol", chapitre: "Verbos a diptongo", difficulte: 2,
+    type: "reponse_courte", question: "Conjugue « contar » (compter/raconter) à la 3e personne du singulier. (un mot)",
+    reponses: ["cuenta"],
+    indice: "Verbe à diphtongue o → ue, comme volver.",
+    explication: "« Cuenta » : contar est un verbe à diphtongue o → ue (cuento, cuentas, cuenta, contamos, contáis, cuentan).",
+  },
+  {
+    id: "espagnol-8e", matiere: "espagnol", chapitre: "Verbos a diptongo", difficulte: 2,
+    type: "qcm", question: "Conjugue « querer » (vouloir) à la personne « vosotros ».",
+    choix: ["queréis", "quieren", "quieres", "queremos"], bonne: 0,
+    indice: "Comme pour SOLER, la diphtongue disparaît à « vosotros ».",
+    explication: "« Queréis » : querer = quiero, quieres, quiere, queremos, QUERÉIS, quieren.",
+  },
+  {
+    id: "espagnol-8f", matiere: "espagnol", chapitre: "Verbos a diptongo", difficulte: 2,
+    type: "reponse_courte", question: "Conjugue « poder » (pouvoir) à la 1ère personne du singulier. (un mot)",
+    reponses: ["puedo"],
+    indice: "Verbe à diphtongue o → ue.",
+    explication: "« Puedo » : poder = puedo, puedes, puede, podemos, podéis, pueden.",
+  },
+  {
+    id: "espagnol-8g", matiere: "espagnol", chapitre: "Verbos a debilitamiento", difficulte: 3,
+    type: "reponse_courte", question: "Conjugue « pedir » (demander) à la 1ère personne du pluriel (nosotros). (un mot)",
+    reponses: ["pedimos"],
+    indice: "Les verbes à affaiblissement (e→i) gardent la voyelle d'origine à nosotros/vosotros, contrairement aux verbes à diphtongue.",
+    explication: "« Pedimos » : pedir = pido, pides, pide, PEDIMOS, pedís, piden (le e→i ne touche pas nosotros/vosotros).",
+  },
+
+  // ---- Ser y estar ----
+  {
     id: "espagnol-9", matiere: "espagnol", chapitre: "Ser y estar", difficulte: 2,
     type: "qcm", question: "Complète : « Hoy nosotros ___ un poco cansados. » (fatigués, aujourd'hui)",
     choix: ["estamos", "somos", "estáis", "son"], bonne: 0,
     indice: "Un état temporaire (être fatigué aujourd'hui) se dit avec ESTAR, pas SER.",
     explication: "« Estamos cansados » : ESTAR sert pour un état passager (fatigue, humeur), SER pour une qualité permanente.",
   },
+  {
+    id: "espagnol-9b", matiere: "espagnol", chapitre: "Ser y estar", difficulte: 2,
+    type: "qcm", question: "Complète : « Este señor ___ mi profesor de lengua y ___ muy simpático. » (deux fois le même verbe)",
+    choix: ["es / es", "está / está", "es / está", "está / es"], bonne: 0,
+    indice: "Être « professeur » et être « sympathique » sont deux caractéristiques durables : même verbe les deux fois.",
+    explication: "« Es mi profesor... y es muy simpático » : une identité et une qualité de caractère se disent avec SER.",
+  },
+  {
+    id: "espagnol-9c", matiere: "espagnol", chapitre: "Ser y estar", difficulte: 2,
+    type: "qcm", question: "Complète : « Ellos ___ en el patio de recreo. » (ils se trouvent dans la cour)",
+    choix: ["están", "son", "estáis", "es"], bonne: 0,
+    indice: "Indiquer où se trouve quelqu'un se dit toujours avec ESTAR.",
+    explication: "« Están en el patio » : la localisation se dit avec ESTAR, jamais avec SER.",
+  },
+  {
+    id: "espagnol-9d", matiere: "espagnol", chapitre: "Ser y estar", difficulte: 1,
+    type: "qcm", question: "Complète : « Yo ___ en el gimnasio. » (je me trouve dans le gymnase)",
+    choix: ["estoy", "soy", "está", "es"], bonne: 0,
+    indice: "Encore une localisation.",
+    explication: "« Estoy en el gimnasio » : ESTAR pour dire où l'on se trouve.",
+  },
+
+  // ---- Expresar la obligación ----
   {
     id: "espagnol-10", matiere: "espagnol", chapitre: "Expresar la obligación", difficulte: 1,
     type: "qcm", question: "Que signifie « HAY QUE + infinitivo » (ex : « hay que escuchar a la profesora ») ?",
@@ -261,196 +438,161 @@ const EXERCICES = [
     explication: "« Hay que + infinitif » = il faut... (obligation impersonnelle). « Tener que » et « deber » expriment aussi l'obligation, mais pour une personne précise (« tú tienes que... », « debes... »).",
   },
   {
+    id: "espagnol-10b", matiere: "espagnol", chapitre: "Expresar la obligación", difficulte: 2,
+    type: "qcm", question: "Comment dit-on « tu dois apprendre le vocabulaire » en espagnol, avec TENER QUE ?",
+    choix: ["Tienes que aprender el vocabulario", "Hay que aprender el vocabulario", "Debo aprender el vocabulario", "Tener que aprendes el vocabulario"], bonne: 0,
+    indice: "TENER QUE + infinitif, conjugué pour « tú ».",
+    explication: "« Tienes que aprender el vocabulario » : TENER QUE + infinitif = tu dois... (obligation personnelle).",
+  },
+  {
+    id: "espagnol-10c", matiere: "espagnol", chapitre: "Expresar la obligación", difficulte: 2,
+    type: "qcm", question: "Comment dit-on « nous devons beaucoup étudier » avec DEBER ?",
+    choix: ["Debemos estudiar mucho", "Hay que estudiar mucho nosotros", "Tenemos deber estudiar mucho", "Debimos estudiar mucho"], bonne: 0,
+    indice: "DEBER + infinitif, conjugué pour « nosotros ».",
+    explication: "« Debemos estudiar mucho » : DEBER + infinitif = nous devons... (une autre façon d'exprimer l'obligation).",
+  },
+  {
+    id: "espagnol-10d", matiere: "espagnol", chapitre: "Normas de clase (vocabulario)", difficulte: 1,
+    type: "reponse_courte", question: "Comment dit-on « la poubelle » en espagnol, comme dans « tirar los papeles a la ___ » ? (un mot)",
+    reponses: ["basura", "la basura"],
+    indice: "C'est le mot utilisé pour « jeter les papiers à la... ».",
+    explication: "« La basura » = la poubelle. « Tirar los papeles a la basura » = jeter les papiers à la poubelle.",
+  },
+  {
+    id: "espagnol-10e", matiere: "espagnol", chapitre: "Normas de clase (vocabulario)", difficulte: 2,
+    type: "qcm", question: "D'après les règles de classe du document, laquelle de ces actions N'EST PAS une règle à respecter ?",
+    choix: ["Gritar en clase", "Escuchar al profesor", "Levantar la mano", "Decir « por favor »"], bonne: 0,
+    indice: "Trois sont des choses à faire (règles positives) ; une seule est interdite.",
+    explication: "Le document liste « NO HAY QUE GRITAR NI HABLAR FUERTE EN CLASE » : crier est justement ce qu'il ne faut PAS faire.",
+  },
+
+  // ---- La ropa ----
+  {
+    id: "espagnol-12", matiere: "espagnol", chapitre: "La ropa", difficulte: 1,
+    type: "qcm", question: "Comment dit-on « le pantalon » en espagnol (au pluriel, comme souvent) ?",
+    choix: ["los pantalones", "los vaqueros", "la falda", "el jersey"], bonne: 0,
+    indice: "Attention, en espagnol ce mot s'utilise presque toujours au pluriel, comme en français.",
+    explication: "« Los pantalones » = le pantalon (toujours au pluriel en espagnol, comme « los vaqueros » pour le jean).",
+  },
+  {
+    id: "espagnol-12b", matiere: "espagnol", chapitre: "La ropa", difficulte: 1,
+    type: "qcm", question: "« Las gafas de sol » signifie...",
+    choix: ["les lunettes de soleil", "les chaussures de sport", "le sac à dos", "le manteau"], bonne: 0,
+    indice: "« Gafas » = lunettes, « sol » = soleil.",
+    explication: "« Las gafas de sol » = les lunettes de soleil.",
+  },
+  {
+    id: "espagnol-12c", matiere: "espagnol", chapitre: "La ropa", difficulte: 2,
+    type: "reponse_courte", question: "Comment dit-on « la jupe » en espagnol ? (un mot)",
+    reponses: ["falda", "la falda"],
+    indice: "C'est un vêtement porté par les filles dans l'uniforme cubain vu dans le document.",
+    explication: "« La falda » = la jupe.",
+  },
+  {
+    id: "espagnol-12d", matiere: "espagnol", chapitre: "La ropa", difficulte: 2,
+    type: "qcm", question: "Parmi ces mots, lequel désigne des chaussures (« les baskets ») ?",
+    choix: ["las zapatillas de deporte", "los tacones", "las botas", "los zapatos"], bonne: 0,
+    indice: "« Deporte » = sport.",
+    explication: "« Las zapatillas de deporte » = les baskets. « Los tacones » = les talons, « las botas » = les bottes, « los zapatos » = les chaussures (en général).",
+  },
+
+  // ---- Uniformes: Cuba ----
+  {
+    id: "espagnol-13", matiere: "espagnol", chapitre: "Uniformes: Cuba", difficulte: 2,
+    type: "qcm", question: "D'après le document sur les élèves cubains, quel est l'uniforme des garçons ?",
+    choix: ["Camisa blanca y pantalón azul", "Camiseta roja y pantalón corto", "Camisa azul y pantalón blanco", "Falda azul y camisa blanca"], bonne: 0,
+    indice: "« Llevan un uniforme: camisa blanca y pantalón azul para los chicos... »",
+    explication: "« Camisa blanca y pantalón azul para los chicos y falda azul para las chicas » : chemise blanche + pantalon bleu pour les garçons, jupe bleue pour les filles.",
+  },
+  {
+    id: "espagnol-13b", matiere: "espagnol", chapitre: "Uniformes: Cuba", difficulte: 2,
+    type: "qcm", question: "Et l'uniforme des filles, d'après le même document ?",
+    choix: ["Camisa blanca y falda azul", "Camisa blanca y pantalón azul", "Vestido azul", "Camiseta blanca y vaqueros"], bonne: 0,
+    indice: "Même chemise que les garçons, mais pas le même bas.",
+    explication: "Les filles portent « camisa blanca » (comme les garçons) et « falda azul » (jupe bleue) au lieu du pantalon.",
+  },
+
+  // ---- Mi horario de clases ----
+  {
+    id: "espagnol-14", matiere: "espagnol", chapitre: "Mi horario de clases", difficulte: 2,
+    type: "qcm", question: "D'après l'horaire du document (« Mi horario de clases »), à quelle heure commencent les cours chaque jour ?",
+    choix: ["A las ocho y media", "A las ocho", "A las nueve", "A las siete y media"], bonne: 0,
+    indice: "C'est la première ligne du tableau, tous les jours.",
+    explication: "Les cours commencent « a las ocho y media » (8h30) tous les jours de la semaine, d'après le tableau.",
+  },
+  {
+    id: "espagnol-14b", matiere: "espagnol", chapitre: "Mi horario de clases", difficulte: 2,
+    type: "reponse_courte", question: "D'après l'horaire, combien de minutes dure le recreo (la récréation) ? (nombre uniquement)",
+    reponses: ["30", "treinta"],
+    indice: "Le recreo va de 11:00 à 11:30 dans le tableau.",
+    explication: "Le recreo dure 30 minutes (treinta minutos), de 11h00 à 11h30.",
+  },
+  {
+    id: "espagnol-14c", matiere: "espagnol", chapitre: "Mi horario de clases", difficulte: 2,
+    type: "vrai_faux", question: "D'après le document, la matière « Sociales » correspond à l'histoire et à la géographie.",
+    reponse: true,
+    indice: "C'est indiqué en note de bas de tableau (renvoi n°1).",
+    explication: "Vrai : la note 1 du document précise « Sociales = histoire et géographie ».",
+  },
+  {
+    id: "espagnol-14d", matiere: "espagnol", chapitre: "Mi horario de clases", difficulte: 2,
+    type: "qcm", question: "D'après le tableau, les cours du vendredi se terminent par quelle matière (13:30-14:30) ?",
+    choix: ["Biología y geología", "Francés", "Matemáticas", "Música"], bonne: 0,
+    indice: "Regarde la dernière case de la colonne « Viernes ».",
+    explication: "Le vendredi, le dernier cours (13:30-14:30) est « Biología y geología ».",
+  },
+
+  // ---- Llegar al colegio es una aventura (lago Titicaca) ----
+  {
+    id: "espagnol-15", matiere: "espagnol", chapitre: "Llegar al colegio: el lago Titicaca", difficulte: 2,
+    type: "qcm", question: "D'après le document « Llegar al colegio es una aventura », comment les deux enfants vont-ils à l'école ?",
+    choix: ["Remando (en ramant, en barque)", "Nadando (en nageant)", "A pie (à pied)", "En autobús"], bonne: 0,
+    indice: "Ils vivent près du lac Titicaca et n'ont pas de bateau à moteur.",
+    explication: "Les enfants vont à l'école « remando » (en ramant), en pirogue sur le lac.",
+  },
+  {
+    id: "espagnol-15b", matiere: "espagnol", chapitre: "Llegar al colegio: el lago Titicaca", difficulte: 2,
+    type: "qcm", question: "Pourquoi les enfants n'ont-ils pas leur propre bateau (bote), d'après la correction du document ?",
+    choix: ["Le père l'utilise pour pêcher", "Il est cassé", "Ils préfèrent marcher", "L'école le leur interdit"], bonne: 0,
+    indice: "C'est une réponse liée à l'activité du père.",
+    explication: "« Los niños no tienen bote porque el padre la utiliza para pescar » : le père utilise le bateau pour la pêche.",
+  },
+  {
+    id: "espagnol-15c", matiere: "espagnol", chapitre: "Llegar al colegio: el lago Titicaca", difficulte: 1,
+    type: "vrai_faux", question: "D'après le document, les deux enfants arrivent toujours à l'heure à l'école.",
+    reponse: false,
+    indice: "La correction du questionnaire indique « falso » pour cette affirmation.",
+    explication: "Faux : d'après la correction, « los dos niños siempre llegan a la hora » est marqué falso.",
+  },
+  {
+    id: "espagnol-15d", matiere: "espagnol", chapitre: "Llegar al colegio: el lago Titicaca", difficulte: 2,
+    type: "reponse_courte", question: "D'après la correction, combien de temps les enfants mettent-ils pour aller de chez eux à l'école ? (un mot : media)",
+    reponses: ["media hora", "media"],
+    indice: "« Tardan ___ hora en llegar al cole. »",
+    explication: "« Tardan media hora en llegar al cole » : ils mettent une demi-heure.",
+  },
+
+  // ---- El lago Titicaca (culture) ----
+  {
     id: "espagnol-11", matiere: "espagnol", chapitre: "Cultura: el lago Titicaca", difficulte: 1,
     type: "qcm", question: "Le lac Titicaca se situe à la frontière entre quels deux pays ?",
     choix: ["Perú y Bolivia", "México y Cuba", "España y Portugal", "Chile y Argentina"], bonne: 0,
     indice: "C'est le plus grand lac d'Amérique du Sud, à plus de 3 800 mètres d'altitude.",
     explication: "El lago Titicaca se encuentra en la frontera entre Perú y Bolivia : c'est un lieu sacré pour les Incas, où vit la communauté des Uros sur des îles flottantes.",
   },
-
-  // ============================ ANGLAIS ============================
-  // ---- Lesson: Yearbooks in America ----
   {
-    id: "anglais-1", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 1,
-    type: "qcm", question: "In the United States, what is a « yearbook »?",
-    choix: ["A book of memories from the school year (photos, events...)", "A dictionary used in English class", "The school's weekly timetable", "A letter sent to parents"], bonne: 0,
-    indice: "Il contient plein de photos et de souvenirs de l'année scolaire.",
-    explication: "Un « yearbook » est une tradition scolaire aux États-Unis : un livre-souvenir de l'année, avec des photos et des moments marquants.",
+    id: "espagnol-11b", matiere: "espagnol", chapitre: "Cultura: el lago Titicaca", difficulte: 2,
+    type: "qcm", question: "La comunidad de los Uros, qui vit sur le lac Titicaca, habite sur des îles faites avec quel matériau ?",
+    choix: ["La planta totora (un roseau)", "Du bois flotté", "Des rochers volcaniques", "Du bambou"], bonne: 0,
+    indice: "C'est une plante sauvage qui pousse dans le lac.",
+    explication: "« Vive en islas flotantes hechas con la planta silvestre totora » : les îles flottantes des Uros sont faites avec le roseau totora.",
   },
   {
-    id: "anglais-2", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 1,
-    type: "vrai_faux", question: "Les « yearbooks » sont une tradition scolaire propre aux États-Unis.",
-    reponse: true,
-    indice: "C'est précisément ce que dit le document.",
-    explication: "Vrai : les yearbooks font partie de la vie scolaire américaine, contrairement à la France où cette tradition n'existe pas vraiment.",
-  },
-  {
-    id: "anglais-3", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 2,
-    type: "qcm", question: "D'après le document, laquelle de ces choses ne se trouve PAS typiquement dans un yearbook ?",
-    choix: ["The teachers' home addresses", "Portrait photos of students and teachers", "Photos of sports teams and their results", "Photos from school events and trips"], bonne: 0,
-    indice: "Trois de ces réponses sont explicitement citées dans le document ; une seule n'a rien à y faire.",
-    explication: "Un yearbook contient des photos (élèves, professeurs, équipes sportives, événements, voyages scolaires) — jamais des informations privées comme une adresse.",
-  },
-  {
-    id: "anglais-4", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 2,
-    type: "qcm", question: "Sur la photo du document (des élèves dans un collège au Texas), que font les élèves avec leurs yearbooks ?",
-    choix: ["They are signing them", "They are selling them", "They are throwing them away", "They are reading them silently"], bonne: 0,
-    indice: "C'est une habitude très répandue aux États-Unis en fin d'année : écrire un petit mot dans le yearbook d'un camarade.",
-    explication: "« To sign » = signer : les élèves américains signent (et écrivent souvent un petit mot) dans les yearbooks de leurs camarades en fin d'année.",
-  },
-  {
-    id: "anglais-5", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 1,
-    type: "reponse_courte", question: "Comment dit-on « un souvenir » en anglais, comme dans « a book of ___ » ? (un mot)",
-    reponses: ["memory", "memories"],
-    indice: "C'est un mot qu'on retrouve aussi dans « to memorize ».",
-    explication: "« A memory » (pluriel : memories) = un souvenir. Un yearbook est un « book of memories ».",
-  },
-  {
-    id: "anglais-6", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 1,
-    type: "qcm", question: "Quelle traduction correspond le mieux à « yearbook » ?",
-    choix: ["Un livre-souvenir de l'année scolaire (une sorte d'annuaire)", "Un cahier de texte", "Un bulletin de notes", "Un emploi du temps"], bonne: 0,
-    indice: "Ce n'est ni un carnet de notes, ni un emploi du temps : c'est un objet-souvenir.",
-    explication: "« Yearbook » se traduit par « annuaire scolaire » ou « livre-souvenir de l'année », rempli de photos et de souvenirs.",
-  },
-  {
-    id: "anglais-7", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 1,
-    type: "qcm", question: "Dans l'expression « class photos », que désigne le mot « class » ?",
-    choix: ["La classe (le groupe d'élèves)", "Un cours de sport", "Une salle de classe vide", "Un devoir noté"], bonne: 0,
-    indice: "Pense à une photo de groupe prise devant l'école.",
-    explication: "« Class photos » = les photos de classe : toute la classe posant ensemble pour une photo souvenir.",
-  },
-
-  // ============================ FRANÇAIS ============================
-  // Contenu de démonstration niveau 5ème (restauré à la demande de Léopold).
-  {
-    id: "francais-1", matiere: "francais", chapitre: "Nature des mots", difficulte: 1,
-    type: "qcm", question: "Dans « Le petit chat dort. », quelle est la nature du mot « petit » ?",
-    choix: ["Un adjectif qualificatif", "Un verbe", "Un adverbe", "Un nom"], bonne: 0,
-    indice: "Ce mot donne une information sur le chat.",
-    explication: "« Petit » qualifie le nom « chat » : c'est un adjectif qualificatif.",
-  },
-  {
-    id: "francais-2", matiere: "francais", chapitre: "Compléments du verbe", difficulte: 2,
-    type: "qcm", question: "Dans « Léopold mange une pomme. », quel est le COD ?",
-    choix: ["Léopold", "mange", "une pomme", "il n'y en a pas"], bonne: 2,
-    indice: "Le COD répond à la question « quoi ? » juste après le verbe.",
-    explication: "« Une pomme » répond à « mange quoi ? » : c'est le complément d'objet direct.",
-  },
-  {
-    id: "francais-3", matiere: "francais", chapitre: "Conjugaison", difficulte: 2,
-    type: "qcm", question: "Conjugue « chanter » au passé simple, 3e personne du singulier.",
-    choix: ["il chanta", "il chantait", "il a chanté", "il chante"], bonne: 0,
-    indice: "Les verbes du 1er groupe prennent -a au passé simple à la 3e personne du singulier.",
-    explication: "Au passé simple, « chanter » devient « il chanta ».",
-  },
-  {
-    id: "francais-4", matiere: "francais", chapitre: "Conjugaison", difficulte: 2,
-    type: "vrai_faux", question: "Le futur simple du verbe « voir » à la 1ère personne du singulier est « je verrai ».",
-    reponse: true,
-    indice: "« Voir » est un verbe irrégulier au futur.",
-    explication: "Vrai : je verrai, tu verras, il verra… (à retenir par cœur, c'est irrégulier).",
-  },
-  {
-    id: "francais-5", matiere: "francais", chapitre: "Orthographe", difficulte: 1,
-    type: "qcm", question: "Quel est le pluriel de « cheval » ?",
-    choix: ["chevals", "chevaux", "chevales", "chevaus"], bonne: 1,
-    indice: "Les mots en -al font souvent leur pluriel en -aux.",
-    explication: "Les mots en -al font leur pluriel en -aux : un cheval → des chevaux.",
-  },
-  {
-    id: "francais-6", matiere: "francais", chapitre: "Vocabulaire", difficulte: 1,
-    type: "reponse_courte", question: "Donne un synonyme du mot « content » (un seul mot).",
-    reponses: ["heureux", "joyeux", "ravi", "satisfait"],
-    indice: "Pense à un mot qui veut dire à peu près la même chose.",
-    explication: "« Heureux », « joyeux » ou « ravi » sont de bons synonymes de « content ».",
-  },
-
-  // ============================ HISTOIRE-GÉOGRAPHIE ============================
-  {
-    id: "histgeo-1", matiere: "histoire_geo", chapitre: "Moyen Âge", difficulte: 2,
-    type: "qcm", question: "À quelle époque appartient Charlemagne ?",
-    choix: ["l'Antiquité", "le Moyen Âge", "la Renaissance", "l'époque contemporaine"], bonne: 1,
-    indice: "Il a été sacré empereur en l'an 800.",
-    explication: "Charlemagne (VIIIe-IXe siècle) est une figure majeure du Moyen Âge.",
-  },
-  {
-    id: "histgeo-2", matiere: "histoire_geo", chapitre: "Moyen Âge", difficulte: 1,
-    type: "vrai_faux", question: "Le Moyen Âge se situe entre l'Antiquité et les Temps modernes.",
-    reponse: true,
-    indice: "Situe-le entre la chute de Rome et la Renaissance.",
-    explication: "Le Moyen Âge s'étend environ du Ve au XVe siècle, entre l'Antiquité et la Renaissance.",
-  },
-  {
-    id: "histgeo-3", matiere: "histoire_geo", chapitre: "Naissance de l'Islam", difficulte: 2,
-    type: "qcm", question: "Au VIIe siècle, dans quelle région naît l'Islam ?",
-    choix: ["La péninsule arabique", "L'Égypte", "La Grèce", "L'Espagne"], bonne: 0,
-    indice: "C'est la région où se trouvent La Mecque et Médine.",
-    explication: "L'Islam naît au VIIe siècle dans la péninsule arabique.",
-  },
-  {
-    id: "histgeo-4", matiere: "histoire_geo", chapitre: "Naissance de l'Islam", difficulte: 1,
-    type: "qcm", question: "Comment appelle-t-on le texte sacré de l'Islam ?",
-    choix: ["Le Coran", "La Bible", "La Torah", "Les Évangiles"], bonne: 0,
-    indice: "C'est un mot arabe qui signifie « récitation ».",
-    explication: "Le Coran est le texte sacré de l'Islam.",
-  },
-  {
-    id: "histgeo-5", matiere: "histoire_geo", chapitre: "Ressources en eau", difficulte: 2,
-    type: "qcm", question: "Quelle proportion de l'eau sur Terre est de l'eau douce facilement accessible ?",
-    choix: ["Moins de 1 %", "50 %", "25 %", "10 %"], bonne: 0,
-    indice: "La plupart de l'eau douce est gelée aux pôles ou souterraine.",
-    explication: "Moins de 1 % de l'eau sur Terre est de l'eau douce facilement accessible pour l'être humain.",
-  },
-  {
-    id: "histgeo-6", matiere: "histoire_geo", chapitre: "Ressources en eau", difficulte: 2,
-    type: "qcm", question: "Quel secteur consomme le plus d'eau douce dans le monde ?",
-    choix: ["L'agriculture", "L'industrie", "Les foyers (usage domestique)", "Le tourisme"], bonne: 0,
-    indice: "Pense à l'irrigation des champs.",
-    explication: "L'agriculture (irrigation) est le secteur qui consomme le plus d'eau douce dans le monde.",
-  },
-
-  // ============================ SCIENCES ============================
-  {
-    id: "sciences-1", matiere: "sciences", chapitre: "Digestion", difficulte: 2,
-    type: "qcm", question: "Quel organe produit la bile, qui aide à digérer les graisses ?",
-    choix: ["l'estomac", "le foie", "les poumons", "les reins"], bonne: 1,
-    indice: "C'est aussi l'organe qui filtre le sang.",
-    explication: "Le foie produit la bile, qui aide à digérer les graisses dans l'intestin.",
-  },
-  {
-    id: "sciences-2", matiere: "sciences", chapitre: "Digestion", difficulte: 1,
-    type: "vrai_faux", question: "Les aliments sont transformés en nutriments au cours de la digestion.",
-    reponse: true,
-    indice: "Pense à ce que le corps doit faire pour utiliser ce qu'on mange.",
-    explication: "La digestion transforme les aliments en nutriments, assez petits pour passer dans le sang.",
-  },
-  {
-    id: "sciences-3", matiere: "sciences", chapitre: "États de la matière", difficulte: 1,
-    type: "qcm", question: "Comment s'appelle le passage de l'état liquide à l'état gazeux ?",
-    choix: ["l'évaporation", "la fusion", "la solidification", "la condensation"], bonne: 0,
-    indice: "Pense à une flaque d'eau qui disparaît au soleil.",
-    explication: "L'évaporation est le passage de l'état liquide à l'état gazeux.",
-  },
-  {
-    id: "sciences-4", matiere: "sciences", chapitre: "Géologie", difficulte: 2,
-    type: "vrai_faux", question: "Une roche sédimentaire se forme par accumulation de sédiments.",
-    reponse: true,
-    indice: "« Sédimentaire » vient du mot « sédiment ».",
-    explication: "Vrai : les roches sédimentaires se forment par accumulation et compactage de sédiments au fil du temps.",
-  },
-  {
-    id: "sciences-5", matiere: "sciences", chapitre: "Respiration", difficulte: 1,
-    type: "reponse_courte", question: "Quel organe permet la respiration chez l'être humain ? (un mot)",
-    reponses: ["poumons", "les poumons"],
-    indice: "Il y en a deux, dans la cage thoracique.",
-    explication: "Ce sont les poumons qui permettent les échanges gazeux lors de la respiration.",
-  },
-  {
-    id: "sciences-6", matiere: "sciences", chapitre: "Le vivant", difficulte: 1,
-    type: "vrai_faux", question: "Tous les êtres vivants ont besoin d'eau pour survivre.",
-    reponse: true,
-    indice: "Pense à la composition des cellules vivantes.",
-    explication: "L'eau est indispensable à la vie : elle compose une grande partie des cellules vivantes.",
+    id: "espagnol-11c", matiere: "espagnol", chapitre: "Cultura: el lago Titicaca", difficulte: 2,
+    type: "reponse_courte", question: "À combien de mètres d'altitude se situe le lac Titicaca (au minimum, d'après le document) ? (nombre uniquement)",
+    reponses: ["3800", "3.800", "3 800"],
+    indice: "« Está a más de ___ metros de altitud. »",
+    explication: "Le lac Titicaca est situé à plus de 3 800 mètres d'altitude.",
   },
 ];
 

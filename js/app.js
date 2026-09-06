@@ -27,6 +27,7 @@ let etat = {
   reponseActuelle: null,
   aRepondu: false,
   resultatsSession: [], // [{ exercice, reponseDonnee, correct }]
+  debutSession: null, // timestamp (Date.now()) posé au démarrage, pour le suivi du temps passé (coin des parents)
 };
 
 /* ------------------------------- Utilitaires ------------------------------- */
@@ -124,6 +125,7 @@ function demarrerSession(matiereCode, chapitre) {
   etat.session = melanger(exercices);
   etat.index = 0;
   etat.resultatsSession = [];
+  etat.debutSession = Date.now();
 
   afficherEcran("exercice");
   afficherQuestion();
@@ -308,8 +310,9 @@ function finDeSession() {
 
   // Enregistrement local des stats (js/stats.js) — purement du suivi côté
   // navigateur, aucune donnée ne part ailleurs. Silencieux si stats.js absent.
+  const dureeMs = etat.debutSession ? Date.now() - etat.debutSession : null;
   if (window.CoachStats) {
-    window.CoachStats.enregistrerSession(etat.matiereCode, etat.chapitre, etat.resultatsSession);
+    window.CoachStats.enregistrerSession(etat.matiereCode, etat.chapitre, etat.resultatsSession, dureeMs);
   }
 
   mascotteDit(phraseFinDeSession(pourcentage));
@@ -412,6 +415,13 @@ function initEvenements() {
   document.getElementById("btn-suivant").addEventListener("click", suivant);
   document.getElementById("btn-rejouer").addEventListener("click", rejouer);
   document.getElementById("btn-envoyer-email").addEventListener("click", envoyerResumeParEmail);
+
+  const btnParents = document.getElementById("btn-coin-parents");
+  if (btnParents) {
+    btnParents.addEventListener("click", () => {
+      if (window.CoachParents) window.CoachParents.ouvrir();
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

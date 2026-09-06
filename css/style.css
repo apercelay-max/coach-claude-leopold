@@ -1319,3 +1319,36 @@ body[data-vue="reglages"] .mascotte-widget { display: none; }
 @media (max-width: 330px) {
   .nav-lb { display: none; }
 }
+
+/* =========================================================================
+   Coin des parents — réutilise au maximum les classes .stats-* déjà
+   écrites pour l'écran Stats de Léopold ; seulement quelques ajouts ici.
+   ========================================================================= */
+
+.lien-coin-parents {
+  display: block;
+  margin: 18px auto 0;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 10px;
+}
+.lien-coin-parents:hover { color: var(--text-soft); }
+
+.parents-resume p {
+  margin: 0;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+
+.parents-total-temps { margin: 0 0 4px; color: var(--text); }
+.parents-total-temps strong { color: var(--accent); font-size: 1.1em; }
+.parents-derniere, .parents-matiere-meta {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+.parents-matiere-meta { margin-top: 2px; margin-bottom: 14px; }

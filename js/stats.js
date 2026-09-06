@@ -61,7 +61,7 @@
 
   /* ------------------------- Enregistrement --------------------------- */
 
-  function enregistrerSession(matiereCode, chapitre, resultats) {
+  function enregistrerSession(matiereCode, chapitre, resultats, dureeMs) {
     if (!Array.isArray(resultats) || resultats.length === 0) return;
     const etat = charger();
     const maintenant = Date.now();
@@ -75,6 +75,10 @@
       chapitre: chapitre || null,
       total: total,
       correct: correct,
+      // Millisecondes entre le démarrage de la session et la validation de la
+      // dernière question. Absent (undefined) sur les séances enregistrées
+      // avant l'ajout du coin des parents — traité comme 0 partout ailleurs.
+      duree: typeof dureeMs === "number" && dureeMs > 0 ? dureeMs : null,
     });
     if (etat.sessions.length > MAX_SESSIONS) {
       etat.sessions = etat.sessions.slice(etat.sessions.length - MAX_SESSIONS);
@@ -171,6 +175,72 @@
       curseur = new Date(curseur.getTime() - unJour);
     }
     return serie;
+  }
+
+  /* --------------------------- Bilan pour le coin des parents --------------------------- */
+
+  // Agrégation complète, pensée pour un adulte qui n'a que 30 secondes :
+  // temps passé, résultats globaux, par matière, et points d'attention.
+  // La mise en forme (HTML) vit dans js/parents.js — ici, uniquement les
+  // chiffres.
+  function bilanParents() {
+    const etat = charger();
+    const matieres = M();
+    const exercices = X();
+
+    const totalReponses = etat.sessions.reduce((a, s) => a + s.total, 0);
+    const totalCorrect = etat.sessions.reduce((a, s) => a + s.correct, 0);
+    const reussiteGlobale = totalReponses ? Math.round((totalCorrect / totalReponses) * 100) : null;
+    const dureeTotaleMs = etat.sessions.reduce((a, s) => a + (s.duree || 0), 0);
+
+    const septJoursMs = 7 * 86400000;
+    const maintenant = Date.now();
+    const sessions7j = etat.sessions.filter((s) => maintenant - new Date(s.date).getTime() <= septJoursMs);
+    const dureeSemaineMs = sessions7j.reduce((a, s) => a + (s.duree || 0), 0);
+
+    const parMatiere = matieres.map((m) => {
+      const ids = exercices.filter((e) => e.matiere === m.code).map((e) => e.id);
+      const res = maitriseListe(ids, etat.parExercice);
+      const sessionsM = etat.sessions.filter((s) => s.matiere === m.code);
+      const dureeM = sessionsM.reduce((a, s) => a + (s.duree || 0), 0);
+      return {
+        code: m.code,
+        nom: m.nom,
+        emoji: m.emoji,
+        maitrise: res.pct,
+        sessions: sessionsM.length,
+        dureeMs: dureeM,
+      };
+    });
+
+    // Points d'attention : exercices avec moins de 60% de réussite (vus au
+    // moins une fois), les pires en premier.
+    const pointsAttention = Object.keys(etat.parExercice)
+      .map((id) => ({ id: id, ...etat.parExercice[id] }))
+      .filter((e) => e.vus > 0 && e.reussis / e.vus < 0.6)
+      .sort((a, b) => a.reussis / a.vus - b.reussis / b.vus)
+      .slice(0, 8)
+      .map((e) => {
+        const ex = exercices.find((x) => x.id === e.id);
+        const m = ex ? matieres.find((mm) => mm.code === ex.matiere) : null;
+        return ex ? { matiereNom: m ? m.nom : ex.matiere, emoji: m ? m.emoji : "📘", chapitre: ex.chapitre, question: ex.question, ratio: `${e.reussis}/${e.vus}` } : null;
+      })
+      .filter(Boolean);
+
+    return {
+      totalSessions: etat.sessions.length,
+      totalReponses: totalReponses,
+      totalCorrect: totalCorrect,
+      reussiteGlobale: reussiteGlobale,
+      dureeTotaleMs: dureeTotaleMs,
+      dureeSemaineMs: dureeSemaineMs,
+      sessions7jCount: sessions7j.length,
+      serieJours: serieJours(),
+      derniereActivite: etat.sessions.length ? etat.sessions[etat.sessions.length - 1].date : null,
+      parMatiere: parMatiere,
+      pointsAttention: pointsAttention,
+      sessionsRecentes: etat.sessions.slice(-10).reverse(),
+    };
   }
 
   /* --------------------------- Rendu du dashboard --------------------------- */
@@ -422,6 +492,7 @@
     effacerTout: effacerTout,
     resumeMatiere: resumeMatiere,
     maitriseChapitre: maitriseChapitre,
+    bilanParents: bilanParents,
     rendre: rendre,
     _reinitFiltre: function () { filtreActif = "tout"; },
   };

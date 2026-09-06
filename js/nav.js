@@ -22,7 +22,7 @@
 
   const ICONES_MATIERE = { maths: "➗", espagnol: "🇪🇸", anglais: "🇬🇧" };
   const ECRANS_APP = ["accueil", "matieres", "exercice", "resultats"];
-  const ECRANS_EXTRA = ["matiere", "stats", "reglages"];
+  const ECRANS_EXTRA = ["matiere", "stats", "reglages", "parents"];
 
   // MATIERES / EXERCICES sont des `const` globales de data.js, et `etat` un
   // `let` global de app.js : accessibles ici (script chargé après) mais pas

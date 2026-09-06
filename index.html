@@ -67,6 +67,8 @@
       <p class="note-demo">
         ✨ Les exercices sont basés sur les vrais cours et devoirs de Léopold. Dès que de nouveaux documents arrivent, Claude ajoute les matières et chapitres correspondants.
       </p>
+
+      <button type="button" class="lien-coin-parents" id="btn-coin-parents">👨‍👩‍👧 Coin des parents</button>
     </div>
   </section>
 
@@ -160,6 +162,15 @@
     </div>
   </section>
 
+  <!-- ===================== COIN DES PARENTS ===================== -->
+  <section class="ecran hidden" id="ecran-parents">
+    <div class="conteneur conteneur-etroit">
+      <button type="button" class="lien-retour" data-retour="accueil">← Accueil</button>
+      <h2 class="titre-ecran">👨‍👩‍👧 Coin des parents</h2>
+      <div id="parents-contenu"><!-- rempli par js/parents.js --></div>
+    </div>
+  </section>
+
 </main>
 
 <!-- ===================== MASCOTTE PERSISTANTE ===================== -->
@@ -194,6 +205,7 @@
 <script src="js/app.js"></script>
 <script src="js/stats.js"></script>
 <script src="js/reglages.js"></script>
+<script src="js/parents.js"></script>
 <script src="js/nav.js"></script>
 </body>
 </html>
