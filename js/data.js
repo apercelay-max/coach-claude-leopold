@@ -594,6 +594,58 @@ const EXERCICES = [
     indice: "« Está a más de ___ metros de altitud. »",
     explication: "Le lac Titicaca est situé à plus de 3 800 mètres d'altitude.",
   },
+
+  // ============================ ANGLAIS ============================
+  // ---- Lesson: Yearbooks in America ----
+  {
+    id: "anglais-1", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 1,
+    type: "qcm", question: "In the United States, what is a « yearbook »?",
+    choix: ["A book of memories from the school year (photos, events...)", "A dictionary used in English class", "The school's weekly timetable", "A letter sent to parents"], bonne: 0,
+    indice: "Il contient plein de photos et de souvenirs de l'année scolaire.",
+    explication: "Un « yearbook » est une tradition scolaire aux États-Unis : un livre-souvenir de l'année, avec des photos et des moments marquants.",
+  },
+  {
+    id: "anglais-2", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 1,
+    type: "vrai_faux", question: "Les « yearbooks » sont une tradition scolaire propre aux États-Unis.",
+    reponse: true,
+    indice: "C'est précisément ce que dit le document.",
+    explication: "Vrai : les yearbooks font partie de la vie scolaire américaine, contrairement à la France où cette tradition n'existe pas vraiment.",
+  },
+  {
+    id: "anglais-3", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 2,
+    type: "qcm", question: "D'après le document, laquelle de ces choses ne se trouve PAS typiquement dans un yearbook ?",
+    choix: ["The teachers' home addresses", "Portrait photos of students and teachers", "Photos of sports teams and their results", "Photos from school events and trips"], bonne: 0,
+    indice: "Trois de ces réponses sont explicitement citées dans le document ; une seule n'a rien à y faire.",
+    explication: "Un yearbook contient des photos (élèves, professeurs, équipes sportives, événements, voyages scolaires) — jamais des informations privées comme une adresse.",
+  },
+  {
+    id: "anglais-4", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 2,
+    type: "qcm", question: "Sur la photo du document (des élèves dans un collège au Texas), que font les élèves avec leurs yearbooks ?",
+    choix: ["They are signing them", "They are selling them", "They are throwing them away", "They are reading them silently"], bonne: 0,
+    indice: "C'est une habitude très répandue aux États-Unis en fin d'année : écrire un petit mot dans le yearbook d'un camarade.",
+    explication: "« To sign » = signer : les élèves américains signent (et écrivent souvent un petit mot) dans les yearbooks de leurs camarades en fin d'année.",
+  },
+  {
+    id: "anglais-5", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 1,
+    type: "reponse_courte", question: "Comment dit-on « un souvenir » en anglais, comme dans « a book of ___ » ? (un mot)",
+    reponses: ["memory", "memories"],
+    indice: "C'est un mot qu'on retrouve aussi dans « to memorize ».",
+    explication: "« A memory » (pluriel : memories) = un souvenir. Un yearbook est un « book of memories ».",
+  },
+  {
+    id: "anglais-6", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 1,
+    type: "qcm", question: "Quelle traduction correspond le mieux à « yearbook » ?",
+    choix: ["Un livre-souvenir de l'année scolaire (une sorte d'annuaire)", "Un cahier de texte", "Un bulletin de notes", "Un emploi du temps"], bonne: 0,
+    indice: "Ce n'est ni un carnet de notes, ni un emploi du temps : c'est un objet-souvenir.",
+    explication: "« Yearbook » se traduit par « annuaire scolaire » ou « livre-souvenir de l'année », rempli de photos et de souvenirs.",
+  },
+  {
+    id: "anglais-7", matiere: "anglais", chapitre: "Yearbooks in America", difficulte: 1,
+    type: "qcm", question: "Dans l'expression « class photos », que désigne le mot « class » ?",
+    choix: ["La classe (le groupe d'élèves)", "Un cours de sport", "Une salle de classe vide", "Un devoir noté"], bonne: 0,
+    indice: "Pense à une photo de groupe prise devant l'école.",
+    explication: "« Class photos » = les photos de classe : toute la classe posant ensemble pour une photo souvenir.",
+  },
 ];
 
 function getMatiere(code) {

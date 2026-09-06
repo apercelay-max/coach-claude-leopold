@@ -52,6 +52,10 @@
     etat.session = melanger(exs);
     etat.index = 0;
     etat.resultatsSession = [];
+    // Chronomètre la séance pour le coin des parents (js/parents.js) — sans
+    // ça, finDeSession() calcule une durée nulle puisque ce mode ne passe
+    // jamais par l'ancien demarrerSession() de app.js.
+    etat.debutSession = Date.now();
 
     if (vieux) vieux.hidden = true;
     rendre();
