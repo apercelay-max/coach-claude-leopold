@@ -400,6 +400,11 @@ img, svg { max-width: 100%; }
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 .carte-action:hover { transform: translateY(-3px); box-shadow: var(--ombre-forte); border-color: var(--accent-line); }
+.carte-action--reprendre {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+.carte-action--reprendre .carte-action-titre { color: var(--accent-strong); }
 .carte-action-emoji { font-size: 2rem; }
 .carte-action-titre { font-family: var(--police-titre); font-weight: 700; font-size: 1.15rem; color: var(--text); }
 .carte-action-desc { color: var(--text-soft); font-size: 0.9rem; line-height: 1.4; }
@@ -1350,6 +1355,31 @@ body[data-vue="reglages"] .mascotte-widget { display: none; }
   justify-content: center;
   margin-top: 4px;
 }
+
+.reglage-boutons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.reglage-boutons .btn { flex: 1; min-width: 130px; padding: 11px 16px; }
+
+.sync-code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: 6px;
+  text-align: center;
+  padding: 14px 10px;
+  margin: 12px 0 8px;
+  border-radius: var(--rayon-petit);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  border: 1px solid var(--accent-line);
+}
+.sync-statut { font-size: 0.8rem; font-weight: 700; color: var(--text-dim); min-height: 1.1em; }
+.sync-statut[data-etat="ok"] { color: var(--vert); }
+.sync-statut[data-etat="err"] { color: var(--rouge-doux); }
 
 /* =========================================================================
    18. RESPONSIVE

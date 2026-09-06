@@ -117,6 +117,67 @@
     appliquer();
   }
 
+  /* ---------------------- Export / import de la progression ---------------------- */
+
+  const CLES_A_SAUVER = [
+    "coach-claude-leopold:stats-v1",
+    "coach-claude-leopold:reglages-v1",
+    "coach-claude-leopold:email-parent",
+    "coach-claude-leopold:seance-v1",
+  ];
+
+  function exporterProgression() {
+    const paquet = { app: "coach-claude-leopold", version: 1, exporte: new Date().toISOString(), donnees: {} };
+    CLES_A_SAUVER.forEach((k) => {
+      try {
+        const v = localStorage.getItem(k);
+        if (v !== null) paquet.donnees[k] = v;
+      } catch (e) {}
+    });
+    const blob = new Blob([JSON.stringify(paquet, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "coach-claude-progression-" + new Date().toISOString().slice(0, 10) + ".json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+  function importerProgression() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/json,.json";
+    input.addEventListener("change", () => {
+      const f = input.files && input.files[0];
+      if (!f) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        let paquet;
+        try {
+          paquet = JSON.parse(String(reader.result));
+        } catch (e) {
+          window.alert("Ce fichier n'est pas une sauvegarde valide.");
+          return;
+        }
+        if (!paquet || paquet.app !== "coach-claude-leopold" || !paquet.donnees) {
+          window.alert("Ce fichier ne vient pas de cette appli.");
+          return;
+        }
+        if (!window.confirm("Remplacer ta progression actuelle par celle du fichier ? L'appli va se recharger.")) return;
+        try {
+          Object.keys(paquet.donnees).forEach((k) => {
+            if (CLES_A_SAUVER.indexOf(k) !== -1) localStorage.setItem(k, paquet.donnees[k]);
+          });
+        } catch (e) {}
+        location.reload();
+      };
+      reader.readAsText(f);
+    });
+    input.click();
+  }
+
   /* ---------------------- Petits constructeurs d'UI ---------------------- */
 
   function el(tag, cls, texte) {
@@ -318,6 +379,31 @@
     gNav.appendChild(ligneToggle("Effet verre (Liquid Glass)", "La capsule translucide façon iOS. Désactive pour une barre pleine et opaque.", "navGlass"));
     gNav.appendChild(ligneToggle("Libellés sous les icônes", "Afficher le nom (Maths, Stats…) sous chaque icône de la barre.", "navLabels"));
     conteneur.appendChild(gNav);
+
+    // ----- Mémoire & sauvegarde -----
+    const gMem = groupe("Mémoire & sauvegarde");
+    // Emplacement pour la synchro multi-appareils (rempli par js/sync.js si présent).
+    const slotSync = el("div");
+    slotSync.id = "reglages-sync";
+    gMem.appendChild(slotSync);
+    if (window.CoachSync && window.CoachSync.rendreReglages) {
+      window.CoachSync.rendreReglages(slotSync);
+    }
+
+    const wrapExp = el("div", "reglage-ligne-col");
+    wrapExp.appendChild(el("div", "reglage-titre", "Sauvegarde sur cet appareil"));
+    wrapExp.appendChild(
+      el("div", "reglage-desc", "Ta progression est déjà gardée dans le navigateur. Ici tu peux en faire un fichier de secours, ou en recharger un.")
+    );
+    const ligneBtns = el("div", "reglage-boutons");
+    const bExport = el("button", "btn btn-fantome", "⬇︎ Exporter");
+    bExport.addEventListener("click", exporterProgression);
+    const bImport = el("button", "btn btn-fantome", "⬆︎ Importer");
+    bImport.addEventListener("click", importerProgression);
+    ligneBtns.append(bExport, bImport);
+    wrapExp.appendChild(ligneBtns);
+    gMem.appendChild(wrapExp);
+    conteneur.appendChild(gMem);
 
     // ----- Réinitialiser -----
     const gReset = groupe("Remise à zéro");
