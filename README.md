@@ -26,9 +26,9 @@ Il n'y a toujours **ni mode évaluation, ni XP/niveaux/étoiles** : les stats so
 
 Les matières et exercices de [`js/data.js`](js/data.js) sont construits à partir des vrais cours et devoirs de Léopold, déposés dans le dossier `Léopold doc 5B/` (à la racine du projet). **Seules les matières qui ont au moins un document dans ce dossier apparaissent dans l'appli.**
 
-Contenu actuel (~39 exercices, environ 1h de révision cumulée) :
+Contenu actuel (~99 exercices, environ 1h30-2h de révision cumulée) :
 
-- **➗ Mathématiques** : nombres décimaux (cours), vitesse et circonférence (devoir sur l'ISS), vocabulaire de maths en anglais (cours DNL).
+- **➗ Mathématiques** : nombres décimaux (cours), vitesse et circonférence (devoir sur l'ISS), vocabulaire de maths en anglais (cours DNL), priorités opératoires (fiche de méthode).
 - **🇪🇸 Espagnol** : vocabulaire, conjugaison, la rutina, l'heure, comparatifs, ser/estar, l'obligation, culture (support « la vuelta al cole »).
 - **🇬🇧 Anglais** : compréhension de texte sur les yearbooks américains.
 
